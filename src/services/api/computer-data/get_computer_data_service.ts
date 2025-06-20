@@ -2,7 +2,6 @@ import {BACKEND_URL} from "$lib/config";
 
 export async function getAllComputerData() : Promise<ComputerData[]> {
     let response = await fetch(BACKEND_URL + "computer-data/")
-    console.log(response)
     if (!response.ok) {
         throw new Error(response.statusText);
     }
