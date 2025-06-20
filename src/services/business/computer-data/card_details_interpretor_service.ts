@@ -1,4 +1,5 @@
-import type {Detail, FormatedCardDetail} from "../types/detail";
+import type {FormatedCardDetail} from "../../../types/business/formated_detail";
+import type {Detail} from "../../../types/dto/detail";
 
 export function interpretCardDetails(details: Detail[]): FormatedCardDetail[] {
     let i = 0;

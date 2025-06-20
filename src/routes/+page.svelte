@@ -1,7 +1,7 @@
 
 <script lang="ts">
     import DetailsPreview from "../components/DetailsPreview.svelte";
-    import {interpretCardDetails} from "../services/card_details_interpretor_service";
+    import {interpretCardDetails} from "../services/business/computer-data/card_details_interpretor_service";
 
     let details = [
         {

@@ -1,7 +1,7 @@
 
 <script lang="ts">
-    import type {FormatedCardDetail} from "../types/detail";
-    import {normalize, normalizeString} from "../services/normalizer";
+    import type {FormatedCardDetail} from "../types/business/formated_detail";
+    import {normalize, normalizeString} from "../services/utils/normalizer";
 
     interface Props {
         name: string
