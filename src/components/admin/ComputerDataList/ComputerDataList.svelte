@@ -17,6 +17,7 @@
 
 <section class="container">
     <h1>Page admin</h1>
+    <a href="/admin/new-computer-data">nouveau</a>
     {#await promise}
         <p aria-busy="true">loading</p>
     {:then computerDataList}

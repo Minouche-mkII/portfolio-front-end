@@ -1,5 +1,5 @@
 type ComputerData = {
-    _id: string;
+    _id: string | null;
     name: string;
     illustration_src: string;
     parent_folder: string;

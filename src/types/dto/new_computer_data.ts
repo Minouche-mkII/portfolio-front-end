@@ -1,7 +1,7 @@
 import type {Detail} from "./detail";
 
-type new_computer_data = {
-    id: string;
+export type NewComputerData = {
+    _id: string | null;
     name: string;
     illustration_src: string;
     parent_folder: string;

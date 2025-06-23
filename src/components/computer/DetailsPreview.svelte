@@ -36,3 +36,19 @@
         {@render createPart(part)}
     {/each}
 </div>
+
+<style>
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(17rem, auto));
+        justify-content: start;
+        gap: 1rem;
+    }
+    img {
+        width: 100%;
+        border-radius: 10px;
+    }
+    p {
+        margin-top: 0;
+    }
+</style>

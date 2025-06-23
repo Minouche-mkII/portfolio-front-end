@@ -1,7 +1,25 @@
 :root {
-
+    font-family: 'Source Sans Pro', sans-serif;
+    background: #211e1f;
+    color: lightgray;
 }
 
 p {
     text-align: justify;
+    font-size: 15pt;
+}
+
+h1 {
+    font-size: 30pt;
+}
+
+h2 {
+    font-size: 22pt;
+}
+
+.container {
+    max-width: 70em;
+    vertical-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
