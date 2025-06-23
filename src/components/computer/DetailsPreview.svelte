@@ -1,6 +1,6 @@
 
 <script lang="ts">
-    import type {FormatedCardDetail} from "../../types/business/formated_detail";
+    import type {FormatedCardDetail} from "../../types/business/computer/formated_detail";
     import {normalize, normalizeString} from "../../services/utils/normalizer";
 
     interface Props {

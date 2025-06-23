@@ -1,4 +1,4 @@
-import type {FormatedCardDetail} from "../../../types/business/formated_detail";
+import type {FormatedCardDetail} from "../../../types/business/computer/formated_detail";
 import type {Detail} from "../../../types/dto/detail";
 import {BACKEND_URL} from "$lib/config";
 

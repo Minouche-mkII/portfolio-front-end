@@ -79,7 +79,7 @@
 <form>
     <h2>Carte</h2>
     <section>
-        <img {src} {alt}/>
+        <img class="imagePreview" {src} {alt}/>
         <ImageForm bind:content={computerData.illustration_src}/>
         <label for="name">Nom : </label>
         <input bind:value="{computerData.name}" id="name" name="name"/>
@@ -116,5 +116,8 @@
         border: solid 1px white;
         border-radius: 5px;
         padding : 2em
+    }
+    .imagePreview {
+        max-width: 40%;
     }
 </style>
