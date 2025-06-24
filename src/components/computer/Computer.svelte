@@ -20,12 +20,21 @@
         })
     })
 
-    function openWindow(window: InitWindow) {
+    function openWindow(newWindow: InitWindow) {
+        let width = 600, height = 300;
+        if(newWindow.type === WindowType.Detail) {
+            width = 1100
+            height = 600
+        }
+        const x = window.innerWidth/2-width/2
+        const y =  window.innerHeight/2-height/2
         computerContext.openedWindows.push({
-            x: 0,
-            y: 0,
-            type: window.type,
-            data: window.data,
+            x: x,
+            y: y,
+            height: height,
+            width: width,
+            type: newWindow.type,
+            data: newWindow.data,
         })
     }
 

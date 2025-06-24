@@ -51,4 +51,7 @@
     p {
         margin-top: 0;
     }
+    .container {
+        margin: 2em;
+    }
 </style>

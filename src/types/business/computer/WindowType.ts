@@ -14,6 +14,8 @@ export enum WindowType {
 export type ComputerWindow = {
     x: number,
     y: number,
+    height: number,
+    width: number,
     type: WindowType,
     data: DetailWindow | FolderWindow
 }

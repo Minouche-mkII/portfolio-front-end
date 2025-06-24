@@ -21,7 +21,7 @@
 <style>
     .folder {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(2em, auto));
+        grid-template-columns: repeat(auto-fit, minmax(9em, auto));
         justify-content: start;
     }
 </style>
