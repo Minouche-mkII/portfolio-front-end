@@ -2,13 +2,15 @@
     import ComputerWindowComponent from "./ComputerWindowComponent.svelte";
     import DetailsPreview from "../DetailsPreview.svelte";
     import {getDetails} from "../../../services/business/computer-data/details_loader_service";
+    import type {ComputerWindow, DetailWindow} from "../../../types/business/computer/WindowType";
 
     type Props = {
-        window: ComputerWindow
+        window: ComputerWindow,
+        index: number
     }
-    let {window}: Props = $props()
+    let {index, window}: Props = $props()
     const computerData = (window.data as DetailWindow).computerData
-    const detailsPromise = getDetails(computerData.detailsId)
+    const detailsPromise = getDetails(computerData.details_id)
     const name = computerData.name
 </script>
 
@@ -22,4 +24,4 @@
     {/await}
 {/snippet}
 
-<ComputerWindowComponent child={detailsPreviewRender} {window}/>
+<ComputerWindowComponent child={detailsPreviewRender} {window} {index}/>

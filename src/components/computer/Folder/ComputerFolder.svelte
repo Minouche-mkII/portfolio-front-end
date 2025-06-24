@@ -1,7 +1,8 @@
 <script lang="ts">
     import {getContext} from "svelte";
-    import type {Clickable} from "../../types/business/computer/folder_type";
-    import type {WindowOperation} from "../../types/business/computer/windows_operation";
+    import type {Clickable} from "../../../types/business/computer/folder_type";
+    import type {WindowOperation} from "../../../types/business/computer/windows_operation";
+    import FileComponent from "./FileComponent.svelte";
 
     type Props = {
         files: Clickable[]
@@ -13,29 +14,14 @@
 
 <div class="folder">
     {#each files as file}
-        <div class="computerFile" >
-            <button onclick={() => openWindow(file.createdWindow)}>
-                <img src="{file.src}" alt="{file.alt}"/>
-                {file.name}
-            </button>
-        </div>
+        <FileComponent {file} openWindow={ () => openWindow(file.createdWindow) } />
     {/each}
 </div>
 
 <style>
     .folder {
-        display: flex;
-    }
-    button {
-        height: 9em;
-        width: 9em;
-        margin: 1em;
-        background: none;
-        color: white;
-        border: none;
-    }
-    button img {
-        height: 80%;
-        width: 80%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(2em, auto));
+        justify-content: start;
     }
 </style>

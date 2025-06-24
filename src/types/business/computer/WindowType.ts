@@ -1,19 +1,24 @@
-type FolderWindow = {
+export type FolderWindow = {
     computerDataList: ComputerDataInFolder[]
 }
 
-type DetailWindow = {
+export type DetailWindow = {
     computerData: ComputerDataInFolder,
 }
 
-enum WindowType {
+export enum WindowType {
     Folder,
     Detail
 }
 
-type ComputerWindow = {
+export type ComputerWindow = {
     x: number,
     y: number,
+    type: WindowType,
+    data: DetailWindow | FolderWindow
+}
+
+export type InitWindow = {
     type: WindowType,
     data: DetailWindow | FolderWindow
 }
