@@ -22,6 +22,12 @@
         <img {src} {alt}>
     {:else if part.type === "intern-link"}
         <InternLinkComponent props={normalizeArrayString(part.content)}/>
+    {:else if part.type === "column"}
+        <div>
+            {#each part.content as underPart}
+                {@render createPart(normalize<FormatedCardDetail>(underPart))}
+            {/each}
+        </div>
     {/if}
 {/snippet}
 

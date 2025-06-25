@@ -2,6 +2,8 @@ import type {FormatedCardDetail} from "../../../types/business/computer/formated
 import type {Detail} from "../../../types/dto/detail";
 import {BACKEND_URL} from "$lib/config";
 
+
+// ça pourrait être plus joli, il peut etre interessant de rafactorer tout ça plus tard
 export function interpretCardDetails(details: Detail[]): FormatedCardDetail[] {
     let i = 0;
     let result: FormatedCardDetail[] = [];
@@ -9,17 +11,19 @@ export function interpretCardDetails(details: Detail[]): FormatedCardDetail[] {
         let detail = details[i];
         if(detail.type === "row") {
             let row;
-            [row, i] = createRow(i, details, detail);
+            [row, i] = createRow(i, details, detail, "row");
             result.push(row);
         } else {
-            result.push(interpretContent(detail));
+            let element
+            [element, i] = interpretContent(i, detail, details)
+            result.push(element);
         }
         i++
     }
     return result
 }
 
-function createRow(i: number, details: Detail[], row: Detail): [FormatedCardDetail, number] {
+function createRow(i: number, details: Detail[], row: Detail, type: string): [FormatedCardDetail, number] {
     let columns : FormatedCardDetail[] = [];
     let nbColumn= +row.content
     for (let j = 0; j< nbColumn; j++) {
@@ -28,25 +32,36 @@ function createRow(i: number, details: Detail[], row: Detail): [FormatedCardDeta
         if(!detail) {
             break
         }
-        columns.push(interpretContent(detail));
+        let returnValues = interpretContent(i, detail, details)
+        columns.push(returnValues[0]);
+        i = returnValues[1]
     }
-    let formatedDetail = {type: "row", content: columns}
-    Object.freeze(formatedDetail);
+    let formatedDetail = {type: type, content: columns}
     return [formatedDetail, i]
 }
 
-function interpretContent(detail: Detail): FormatedCardDetail {
+function interpretContent(i:number, detail: Detail, details: Detail[]): [FormatedCardDetail, number] {
+    let formatedObject : FormatedCardDetail = {type: detail.type, content: detail.content}
+    let index = i
     switch (detail.type) {
         case "paragraph":
-            return {type: "paragraph", content: formatParagraphContent(detail.content)}
+            formatedObject.content = formatParagraphContent(detail.content)
+            break
         case "image":
             let content = splitImageContent(detail.content)
             content[0] = BACKEND_URL+content[0]
-            return {type: "image", content: content}
+            formatedObject.content = content
+            break
         case "intern-link":
-            return {type: "intern-link", content: splitImageContent(detail.content)}
+            formatedObject.content = splitImageContent(detail.content)
+            break
+        case "column":
+            let result = createRow(i, details, detail, "column");
+            formatedObject = result[0]
+            index = result[1]
+            break
     }
-    return detail;
+    return [formatedObject, index]
 }
 
 export function splitImageContent(content: string) {

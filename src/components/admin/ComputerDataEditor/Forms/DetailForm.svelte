@@ -14,8 +14,9 @@
     <option value="title">titre</option>
     <option value="paragraph">paragraphe</option>
     <option value="image">image</option>
-    <option value="row">ligne</option>
     <option value="intern-link">lien interne</option>
+    <option value="row">ligne</option>
+    <option value="column">colonne</option>
 </select>
 {#if detail.type === "row"}
     <input bind:value={detail.content}>
@@ -27,4 +28,6 @@
     <input bind:value={detail.content}>
 {:else if detail.type === "intern-link"}
     <InternLinkForm bind:content={detail.content}/>
+{:else if detail.type === "column"}
+    <input bind:value={detail.content} />
 {/if}
