@@ -12,6 +12,7 @@ export enum WindowType {
 }
 
 export type ComputerWindow = {
+    id: number,
     x: number,
     y: number,
     height: number,
