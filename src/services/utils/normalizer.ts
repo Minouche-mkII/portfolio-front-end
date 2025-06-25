@@ -5,3 +5,7 @@ export function normalize<T>(value : any) {
 export function normalizeString(value : any): string {
     return value as string
 }
+
+export function normalizeArrayString(value : any) : string[] {
+    return value as string[]
+}

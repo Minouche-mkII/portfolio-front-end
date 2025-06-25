@@ -1,6 +1,6 @@
 <script lang="ts">
-    import {uploadFile} from "../../../services/api/files/files-service";
-    import {splitImageContent} from "../../../services/business/computer-data/card_details_interpretor_service";
+    import {uploadFile} from "../../../../services/api/files/files-service";
+    import {splitImageContent} from "../../../../services/business/computer-data/card_details_interpretor_service";
 
     type props = {
         content: string

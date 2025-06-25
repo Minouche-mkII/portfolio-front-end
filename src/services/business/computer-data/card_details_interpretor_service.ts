@@ -20,7 +20,6 @@ export function interpretCardDetails(details: Detail[]): FormatedCardDetail[] {
 }
 
 function createRow(i: number, details: Detail[], row: Detail): [FormatedCardDetail, number] {
-
     let columns : FormatedCardDetail[] = [];
     let nbColumn= +row.content
     for (let j = 0; j< nbColumn; j++) {
@@ -32,6 +31,7 @@ function createRow(i: number, details: Detail[], row: Detail): [FormatedCardDeta
         columns.push(interpretContent(detail));
     }
     let formatedDetail = {type: "row", content: columns}
+    Object.freeze(formatedDetail);
     return [formatedDetail, i]
 }
 
@@ -43,6 +43,8 @@ function interpretContent(detail: Detail): FormatedCardDetail {
             let content = splitImageContent(detail.content)
             content[0] = BACKEND_URL+content[0]
             return {type: "image", content: content}
+        case "intern-link":
+            return {type: "intern-link", content: splitImageContent(detail.content)}
     }
     return detail;
 }

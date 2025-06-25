@@ -27,18 +27,26 @@
         style = `user-select: ${userSelect};`
     })
 
+    let newWindowX = 150
+    let newWindowY = 150
     function openWindow(newWindow: InitWindow) {
         let width = 600, height = 300;
         if(newWindow.type === WindowType.Detail) {
             width = 1100
             height = 600
         }
-        const x = window.innerWidth/2-width/2
-        const y =  window.innerHeight/2-height/2
+        newWindowX += 21
+        newWindowY += 21
+        if(newWindowY + height > window.innerHeight - 50) {
+            newWindowY = 150
+        }
+        if(newWindowX + width > window.innerWidth - 50) {
+            newWindowX = 150
+        }
         computerContext.openedWindows.push({
             id: lastId,
-            x: x,
-            y: y,
+            x: newWindowX,
+            y: newWindowY,
             height: height,
             width: width,
             type: newWindow.type,

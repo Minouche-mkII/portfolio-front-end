@@ -1,4 +1,4 @@
-type ComputerData = {
+export type ComputerData = {
     _id: string | null;
     name: string;
     illustration_src: string;

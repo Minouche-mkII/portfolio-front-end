@@ -1,7 +1,7 @@
 <script lang="ts">
     import type {Detail} from "../../../types/dto/detail";
-    import ImageForm from "./ImageForm.svelte";
-    import DetailForm from "./DetailForm.svelte";
+    import ImageForm from "./Forms/ImageForm.svelte";
+    import DetailForm from "./Forms/DetailForm.svelte";
     import {splitImageContent} from "../../../services/business/computer-data/card_details_interpretor_service";
     import {BACKEND_URL} from "$lib/config.js";
     import {editComputerData} from "../../../services/api/computer-data/put_computer_data_service";

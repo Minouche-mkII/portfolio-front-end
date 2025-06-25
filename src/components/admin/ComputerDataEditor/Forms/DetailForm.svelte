@@ -1,6 +1,7 @@
 <script lang="ts">
-    import type {Detail} from "../../../types/dto/detail";
+    import type {Detail} from "../../../../types/dto/detail";
     import ImageForm from "./ImageForm.svelte";
+    import InternLinkForm from "./InternLinkForm.svelte";
 
     type Props = {
         detail: Detail
@@ -14,6 +15,7 @@
     <option value="paragraph">paragraphe</option>
     <option value="image">image</option>
     <option value="row">ligne</option>
+    <option value="intern-link">lien interne</option>
 </select>
 {#if detail.type === "row"}
     <input bind:value={detail.content}>
@@ -23,4 +25,6 @@
     <textarea bind:value={detail.content}></textarea>
 {:else if detail.type === "title"}
     <input bind:value={detail.content}>
+{:else if detail.type === "intern-link"}
+    <InternLinkForm bind:content={detail.content}/>
 {/if}

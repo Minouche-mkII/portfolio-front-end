@@ -1,14 +1,14 @@
 
 <script lang="ts">
     import type {FormatedCardDetail} from "../../types/business/computer/formated_detail";
-    import {normalize, normalizeString} from "../../services/utils/normalizer";
+    import {normalize, normalizeArrayString, normalizeString} from "../../services/utils/normalizer";
+    import InternLinkComponent from "./Details/InternLinkComponent.svelte";
 
     interface Props {
         name: string
         details: FormatedCardDetail[]
     }
     let { details, name }: Props = $props();
-
 </script>
 
 {#snippet createPart(part: FormatedCardDetail)}
@@ -20,6 +20,8 @@
         {@const src = normalizeString(part.content[0])}
         {@const alt = normalizeString(part.content[1])}
         <img {src} {alt}>
+    {:else if part.type === "intern-link"}
+        <InternLinkComponent props={normalizeArrayString(part.content)}/>
     {/if}
 {/snippet}
 
