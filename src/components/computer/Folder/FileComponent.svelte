@@ -2,15 +2,9 @@
     import type {Clickable} from "../../../types/business/computer/folder_type";
     type Props = { file: Clickable, openWindow: () => void }
     const { file, openWindow} : Props = $props()
-
-    let hovered = $state(false)
 </script>
 <div class="computerFile" >
-    <button onclick={openWindow}
-        onmouseenter={() => hovered = true}
-        onmouseleave={() => hovered = false}
-        class="{hovered ? 'hovered': ''}"
-    >
+    <button onclick={openWindow}>
         <img src="{file.src}" alt="{file.alt}"/>
         {file.name}
     </button>
@@ -31,7 +25,7 @@
         height: 80%;
         width: 80%;
     }
-    .hovered {
+    button:hover {
         background-color: rgba(255, 255, 255, 0.2);
     }
 </style>

@@ -20,6 +20,7 @@
     let cursorStyle = $state("auto")
     let resizableRight = false
     let resizableLeft = false
+    let resizableTop = false
     let resizableBottom = false
     $effect(() => {
         style = `left: ${computerWindow.x}px; top: ${computerWindow.y}px;`+
@@ -33,12 +34,14 @@
     let offsetY = 0
 
     function startDragging(event: MouseEvent) {
-        windowOperation.setUserSelect(false)
-        const target = event.target as HTMLElement
-        offsetX = event.clientX - target.getBoundingClientRect().left;
-        offsetY = event.clientY - target.getBoundingClientRect().top;
-        window.addEventListener("mousemove", drag)
-        window.addEventListener("mouseup", stopDragging)
+        if(event.clientY - computerWindow.y > 8) {
+            windowOperation.setUserSelect(false)
+            const target = event.target as HTMLElement
+            offsetX = event.clientX - target.getBoundingClientRect().left;
+            offsetY = event.clientY - target.getBoundingClientRect().top;
+            window.addEventListener("mousemove", drag)
+            window.addEventListener("mouseup", stopDragging)
+        }
     }
 
     function stopDragging() {
@@ -70,6 +73,9 @@
         if(resizableBottom) {
             window.addEventListener("mousemove", resizeBottom)
         }
+        if(resizableTop) {
+            window.addEventListener("mousemove", resizeTop)
+        }
         window.addEventListener("mouseup", stopResize)
     }
 
@@ -78,21 +84,14 @@
         const y = event.y - computerWindow.y
         resizableLeft = x < 12
         resizableRight = x > (computerWindow.width - 12)
+        resizableTop = y < 8
         resizableBottom = y > (computerWindow.height - 12)
-        if(resizableBottom) {
-            if(resizableRight) {
-                cursorStyle = "se-resize"
-            } else if (resizableLeft) {
-                cursorStyle = "sw-resize"
-            } else {
-                cursorStyle = "s-resize"
-            }
-        } else if (resizableRight) {
-            cursorStyle = "e-resize"
-        } else if (resizableLeft) {
-            cursorStyle = "w-resize"
-        } else {
+        let horizonalAxis = (resizableLeft ? "w" : (resizableRight ? "e" : ""))
+        let verticalAxis = (resizableTop ? "n" : (resizableBottom ? "s" : ""))
+        if (verticalAxis == "" && horizonalAxis == "") {
             cursorStyle = "auto"
+        } else {
+            cursorStyle = verticalAxis+horizonalAxis+"-resize"
         }
     }
 
@@ -101,17 +100,27 @@
     }
 
     function resizeRight(event: MouseEvent) {
+        windowOperation.setUserSelect(false)
         computerWindow.width = event.x - computerWindow.x
     }
 
     function resizeLeft(event: MouseEvent) {
+        windowOperation.setUserSelect(false)
         let difference = computerWindow.x - event.x
         computerWindow.width += difference
         computerWindow.x = event.x
     }
 
     function resizeBottom(event: MouseEvent) {
+        windowOperation.setUserSelect(false)
         computerWindow.height = event.y - computerWindow.y
+    }
+
+    function resizeTop(event: MouseEvent) {
+        windowOperation.setUserSelect(false)
+        let difference = computerWindow.y - event.y
+        computerWindow.height += difference + 5
+        computerWindow.y = event.y - 5
     }
 
     function stopResize() {
@@ -119,12 +128,14 @@
         window.removeEventListener("mousemove", resizeLeft)
         window.removeEventListener("mousemove", resizeRight)
         window.removeEventListener("mousemove", resizeBottom)
+        window.removeEventListener("mousemove", resizeTop)
+        windowOperation.setUserSelect(true)
     }
 
 </script>
 
 <div role = "tabpanel" tabindex="{index}" class="computer-window"
-     {style} onmousedown={grabWindow} onmousemove={isResizable} onmouseleave={setNotResizable}
+     {style} onmousedown={grabWindow} onmousemove={isResizable} onmouseup={setNotResizable}
 >
     <div role="toolbar" tabindex="0" class="page-header" onmousedown={startDragging}>
         <button onclick={close}>x</button>
@@ -151,5 +162,18 @@
         border-bottom: white solid 2px;
         display: flex;
         justify-content: flex-end;
+        height:2em;
+    }
+    .page-header button {
+        border: none;
+        background: none;
+        color: white;
+        height: auto;
+        width: 2em;
+        margin: 0;
+    }
+
+    button:hover {
+        background-color: red;
     }
 </style>

@@ -5,17 +5,12 @@
         computerData: ComputerDataInFolder
     }
     const {computerData}: Props = $props()
-
-    let hovered = $state(false)
     const imageData = splitImageContent(computerData.illustration_src)
     const src = BACKEND_URL+imageData[0]
     const alt = imageData[1]
 </script>
 
-    <a href="/admin/edit-computer-data/{computerData._id}"
-       onmouseenter = {() => hovered = true}
-       onmouseleave = {() => hovered = false}
-       class="{hovered ? 'hovered': ''}">
+    <a href="/admin/edit-computer-data/{computerData._id}">
         <img {src} {alt}/>
         <p>{computerData.name}</p>
     </a>
@@ -38,7 +33,7 @@
         border-radius: 7%;
         color: lightgray;
     }
-    .hovered {
+    a:hover {
         background-color: white;
     }
 </style>
