@@ -7,6 +7,9 @@
     import {editComputerData} from "../../../services/api/computer-data/put_computer_data_service";
     import {formatNewComputer} from "../../../services/business/computer-data/new_computer_data_formater_service";
     import {postNewComputerData} from "../../../services/api/computer-data/post_computer_data_service";
+    import {deleteComputerData} from "../../../services/api/computer-data/delete_computer_data_service";
+    import type {ComputerData} from "../../../types/dto/computer_data";
+    import {goto} from "$app/navigation";
 
     type Props = {
         edit: boolean,
@@ -74,6 +77,21 @@
             editMode = true
         }
     }
+
+    async function deleteCard() {
+        if(window.confirm("Etes vous sûr de vouloir supprimer cette resource ? Cette action est irreversible")) {
+            if(computerData._id) {
+                let success = false
+                try {
+                    success = await deleteComputerData(computerData._id)
+                } catch(error) {
+                    alert("une erreur est survenue, impossible de supprimer la resource")
+                    console.log(error)
+                }
+                await goto("/admin")
+            }
+        }
+    }
 </script>
 
 <form>
@@ -87,6 +105,7 @@
         <input bind:value="{computerData.parent_folder}" id="folder" name="folder"/>
         <label for="priority">Priorité : </label>
         <input bind:value="{computerData.priority}" id="priority" name="priority" type="number"/>
+        <button onclick={deleteCard}>Supprimer cette carte</button>
     </section>
 
     <h2>Détails</h2>
