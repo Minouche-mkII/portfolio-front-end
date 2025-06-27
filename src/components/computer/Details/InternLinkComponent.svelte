@@ -17,6 +17,8 @@
     function openDetail() {
         windowOperation.openWindow({
             type: WindowType.Detail,
+            logo: "&#128196",
+            name: computerData.name,
             data: {
                 computerData: computerData
             }

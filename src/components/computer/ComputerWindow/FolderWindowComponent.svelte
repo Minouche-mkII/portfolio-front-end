@@ -22,6 +22,8 @@
             src: src,
             alt: alt,
             createdWindow: {
+                logo: "&#128196",
+                name: file.name,
                 type: WindowType.Detail,
                 data: {computerData: file}
             }

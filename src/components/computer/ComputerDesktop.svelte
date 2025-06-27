@@ -13,6 +13,8 @@
             src: "/folderPlaceholder.png",
             alt: "folder-icon",
             createdWindow: {
+                logo: "&#128194",
+                name: "Desktop/"+folder,
                 type: WindowType.Folder,
                 data: { computerDataList: content }
             }

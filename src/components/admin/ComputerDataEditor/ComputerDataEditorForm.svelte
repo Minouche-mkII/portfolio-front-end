@@ -88,7 +88,9 @@
                     alert("une erreur est survenue, impossible de supprimer la resource")
                     console.log(error)
                 }
-                await goto("/admin")
+                if(success) {
+                    await goto("/admin")
+                }
             }
         }
     }
@@ -96,7 +98,7 @@
 
 <form>
     <h2>Carte</h2>
-    <section>
+    <section id="cardSection">
         <img class="imagePreview" {src} {alt}/>
         <ImageForm bind:content={computerData.illustration_src}/>
         <label for="name">Nom : </label>
@@ -111,7 +113,7 @@
     <h2>Détails</h2>
     <section>
         {#each details as _, index}
-            <div>
+            <div class="detail">
                 <button onclick={() => {elementUp(index)}}>↑</button>
                 <button onclick={() => {elementDown(index)}}>↓</button>
                 <DetailForm bind:detail={details[index]} />
@@ -138,5 +140,13 @@
     }
     .imagePreview {
         max-width: 40%;
+    }
+    #cardSection {
+        display: grid;
+    }
+    .detail {
+        margin : 1em;
+        padding: 1em;
+        border : 2px solid white;
     }
 </style>

@@ -1,32 +1,40 @@
 <script lang="ts">
-    import {uploadFile} from "../../../../services/api/files/files-service";
+    import {uploadImage} from "../../../../services/api/files/images-service";
     import {splitImageContent} from "../../../../services/business/computer-data/card_details_interpretor_service";
+    import ImagesList from "../../ImagesAdmin/ImagesList.svelte";
+    import type {Image} from "../../../../types/dto/image_dto";
 
     type props = {
         content: string
     }
     let {content = $bindable()} : props = $props()
-    const imageData = splitImageContent(content)
-    let filePath = $state(imageData[0])
-    let alt = $state(imageData[1])
-    $effect(() => {
-        content = `${filePath}<->${alt}`
-    })
+    let opened = $state(false)
 
-    function sendFile(event: Event) {
-        if(!event) {
-            return
-        }
-        const input = event.target as HTMLInputElement;
-        const file = input.files?.[0]
-        if(!file) {
-            return
-        }
-        uploadFile(file).then((path) => {
-            filePath = path
-        })
+    function selectImage (selectedImage: Image) {
+        content = `${selectedImage.path}<->${selectedImage.alt}`
+        opened = false
     }
 </script>
 
-<input type="file" accept="image/png, image/jpg, image/webp" onchange={sendFile} />
-<input bind:value={alt}/>
+<button onclick={() => opened = true}>Ouvrir formulaire image</button>
+
+{#if opened}
+    <div class="modal">
+        <button onclick={() => {opened = false}}>fermer</button>
+        <ImagesList onSelected = {selectImage}/>
+    </div>
+{/if}
+
+<style>
+    .modal {
+        position: fixed;
+        top: 5%;
+        left: 5%;
+        width: 90%;
+        height: 90%;
+        background: #151313;
+        padding: 2em;
+        border : 5px solid white;
+        border-radius: 15px;
+    }
+</style>

@@ -138,6 +138,7 @@
      {style} onmousedown={grabWindow} onmousemove={isResizable} onmouseup={setNotResizable}
 >
     <div role="toolbar" tabindex="0" class="page-header" onmousedown={startDragging}>
+        <p>{@html computerWindow.logo} {computerWindow.name}</p>
         <button onclick={close}>x</button>
     </div>
     <div class="window-content">
@@ -161,7 +162,6 @@
     .page-header {
         border-bottom: white solid 2px;
         display: flex;
-        justify-content: flex-end;
         height:2em;
     }
     .page-header button {
@@ -170,9 +170,13 @@
         color: white;
         height: auto;
         width: 2em;
-        margin: 0;
+        margin: 0 0 0 auto;
     }
-
+    .page-header p {
+        margin: 0 0 0 8px;
+        font-size: 16px;
+        align-self: center;
+    }
     button:hover {
         background-color: red;
     }

@@ -49,6 +49,8 @@
             y: newWindowY,
             height: height,
             width: width,
+            logo: newWindow.logo,
+            name: newWindow.name,
             type: newWindow.type,
             data: newWindow.data,
         })
