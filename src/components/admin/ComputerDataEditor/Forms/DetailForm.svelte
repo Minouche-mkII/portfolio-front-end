@@ -17,6 +17,7 @@
     <option value="intern-link">lien interne</option>
     <option value="row">ligne</option>
     <option value="column">colonne</option>
+    <option value="image-badge">badge image</option>
 </select>
 {#if detail.type === "row"}
     <input bind:value={detail.content}>
@@ -30,4 +31,6 @@
     <InternLinkForm bind:content={detail.content}/>
 {:else if detail.type === "column"}
     <input bind:value={detail.content} />
+{:else if detail.type === "image-badge"}
+    <ImageForm bind:content={detail.content}/>
 {/if}

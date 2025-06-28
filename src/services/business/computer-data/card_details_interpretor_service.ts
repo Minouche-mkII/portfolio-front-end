@@ -48,9 +48,10 @@ function interpretContent(i:number, detail: Detail, details: Detail[]): [Formate
             formatedObject.content = formatParagraphContent(detail.content)
             break
         case "image":
-            let content = splitImageContent(detail.content)
-            content[0] = BACKEND_URL+content[0]
-            formatedObject.content = content
+            formatedObject.content = imageContent(detail)
+            break
+        case "image-badge":
+            formatedObject.content = imageContent(detail)
             break
         case "intern-link":
             formatedObject.content = splitImageContent(detail.content)
@@ -62,6 +63,12 @@ function interpretContent(i:number, detail: Detail, details: Detail[]): [Formate
             break
     }
     return [formatedObject, index]
+}
+
+function imageContent(detail: Detail) {
+    let content = splitImageContent(detail.content)
+    content[0] = BACKEND_URL+content[0]
+    return content
 }
 
 export function splitImageContent(content: string) {
