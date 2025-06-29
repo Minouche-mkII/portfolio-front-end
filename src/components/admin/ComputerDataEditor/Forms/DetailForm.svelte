@@ -18,6 +18,7 @@
     <option value="row">ligne</option>
     <option value="column">colonne</option>
     <option value="image-badge">badge image</option>
+    <option value="hr" onclick={() => detail.content = ""}>séparateur</option>
 </select>
 {#if detail.type === "row"}
     <input bind:value={detail.content}>

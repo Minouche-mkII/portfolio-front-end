@@ -35,6 +35,8 @@
         </div>
     {:else if part.type === "image-badge"}
         <ImageBadgeComponent content={normalizeArrayString(part.content)}/>
+    {:else if part.type === "hr"}
+        <hr />
     {/if}
 {/snippet}
 
@@ -59,13 +61,9 @@
         justify-content: start;
         gap: 1rem;
     }
-    .grid > .image-div {
-        flex: 1 1 20em;
-        min-width: 20em;
-    }
     .grid > div {
-        flex: 1 1 10em;
-        min-width: 10em;
+        flex: 1 1 19em;
+        min-width: 19em;
         max-width: 100%;
     }
     img {

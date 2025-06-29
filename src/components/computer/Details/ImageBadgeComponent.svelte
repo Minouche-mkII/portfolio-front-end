@@ -17,7 +17,7 @@
         align-items: center;
         width: fit-content;
         position: relative;
-        margin: 0 1em 1em 0;
+        margin: 0 4px 1em 0;
         justify-self: left;
     }
     img {
@@ -42,7 +42,6 @@
         left: 50%;
         transform: translateX(-50%);
     }
-
     .image-badge:hover .tooltip {
         visibility: visible;
         opacity: 1;
