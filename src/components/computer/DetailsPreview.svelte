@@ -27,6 +27,8 @@
         </div>
     {:else if part.type === "intern-link"}
         <InternLinkComponent props={normalizeArrayString(part.content)}/>
+    {:else if part.type === "extern-link"}
+        <a target="_blank" rel="noopener noreferrer" href="{normalizeString(part.content[0])}">{normalizeString(part.content[1])}</a>
     {:else if part.type === "column"}
         <div>
             {#each part.content as underPart}
@@ -35,6 +37,8 @@
         </div>
     {:else if part.type === "image-badge"}
         <ImageBadgeComponent content={normalizeArrayString(part.content)}/>
+    {:else if part.type === "text-badge"}
+        <p class="text-badge">{part.content}</p>
     {:else if part.type === "hr"}
         <hr />
     {/if}
@@ -79,5 +83,12 @@
     .container {
         margin: 2em;
         max-width: 100em;
+    }
+    .text-badge{
+        border-radius: 25px;
+        border: solid 1px white;
+        padding: 5px 15px 5px 15px;
+        margin: 0 10px 1em 0;
+        display: inline-block;
     }
 </style>

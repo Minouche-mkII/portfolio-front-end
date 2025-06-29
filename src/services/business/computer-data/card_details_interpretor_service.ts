@@ -61,6 +61,8 @@ function interpretContent(i:number, detail: Detail, details: Detail[]): [Formate
             formatedObject = result[0]
             index = result[1]
             break
+        case "extern-link":
+            formatedObject.content = splitImageContent(detail.content)
     }
     return [formatedObject, index]
 }
