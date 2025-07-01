@@ -1,9 +1,13 @@
 import {BACKEND_URL} from "$lib/config";
 import {HttpError} from "../../utils/http_error";
+import {getBearerToken} from "../auth/auth_service";
 
 export async function deleteComputerData(id: string): Promise<boolean> {
     const response = await fetch(BACKEND_URL+"computer-data/delete/"+id, {
         method: "DELETE",
+        headers: {
+            "Authorization": getBearerToken()
+        }
     })
     if(!response.ok) {
         console.log(`Error deleting data: 

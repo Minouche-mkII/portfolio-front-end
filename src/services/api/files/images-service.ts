@@ -1,6 +1,7 @@
 import {BACKEND_URL} from "$lib/config";
 import {HttpError} from "../../utils/http_error";
 import type {Image} from "../../../types/dto/image_dto";
+import {getBearerToken} from "../auth/auth_service";
 
 type NewFileResponse = {
     file_path: string,
@@ -12,6 +13,10 @@ export async function uploadImage(file: File, alt: string): Promise<string> {
     formData.append('alt', alt);
     const response = await fetch(`${BACKEND_URL}images/new`, {
         method: 'POST',
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            "Authorization": getBearerToken(),
+        },
         body: formData,
     })
 
@@ -23,7 +28,11 @@ export async function uploadImage(file: File, alt: string): Promise<string> {
 }
 
 export async function getAllImages(): Promise<Image[]> {
-    const response = await fetch(`${BACKEND_URL}images`)
+    const response = await fetch(`${BACKEND_URL}images`, {
+        headers: {
+            "authorization": getBearerToken()
+        }
+    })
     if(!response.ok) {
         console.log(response.statusText);
         throw new HttpError(response.status, response.statusText);
@@ -34,6 +43,9 @@ export async function getAllImages(): Promise<Image[]> {
 export async function deleteImage(id: string): Promise<void> {
     const response = await fetch(`${BACKEND_URL}images/delete/${id}`, {
         method: 'DELETE',
+        headers: {
+            'Authorization': getBearerToken()
+        }
     })
     if(!response.ok) {
         throw new HttpError(response.status, response.statusText);

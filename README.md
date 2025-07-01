@@ -1,7 +1,8 @@
 # Portfolio front-end
 
 ## env file
-BACK_END_ADDR
+VITE_BACKEND_URL
+VITE_PRODUCTION (boolean)
 
 ## run
 
