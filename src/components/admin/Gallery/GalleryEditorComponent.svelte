@@ -3,7 +3,6 @@
     import type {PageDTO} from "../../../types/dto/page-dto";
     import {getAllPages} from "../../../services/api/gallery/get-pages-service";
     import {onMount} from "svelte";
-    import GalleryPageComponent from "../../gallery/GalleryPage/GalleryPageComponent.svelte";
     import PageEditorComponent from "./PageEditorComponent.svelte";
 
     let pages: PageDTO[] = $state([])

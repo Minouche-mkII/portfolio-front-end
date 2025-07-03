@@ -7,20 +7,22 @@
         image: GalleryImageDTO
     }
     let { image } : Props = $props()
+    let style = $derived(`grid-column: span ${image.horizontal_span}; grid-row: span ${image.vertical_span};`)
+    let imgRatio = $derived(`aspect-ratio:${image.horizontal_span} / ${image.vertical_span} ;`)
 </script>
 
-<button class="image-preview">
-    <img src="{BACKEND_URL+image.src}" alt="{image.alt}">
-</button>
+<div role="button" class="image-preview" {style}>
+    <img style="{imgRatio}" src="{BACKEND_URL+image.src}" alt="{image.alt}">
+</div>
 
 <style>
     .image-preview {
-        border: none;
-        background: none;
+        margin: 7px;
+        cursor: pointer;
+        user-select: none;
     }
     img {
         width: 100%;
         height: 100%;
-        aspect-ratio: 1 / 1;
     }
 </style>

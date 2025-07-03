@@ -67,6 +67,10 @@
                 Vertical span :
                 <input type="number" bind:value={image.vertical_span}/>
             </label>
+            <label>
+                Note :
+                <input type="text" bind:value={image.note}/>
+            </label>
             <button onclick={() => page.images.splice(index, 1)}>supprimer</button>
         </div>
     {/each}
