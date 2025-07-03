@@ -1,8 +1,8 @@
 export type GalleryImageDTO = {
     src: string,
     alt: string,
-    horizontal_span: string,
-    vertical_span: string,
+    horizontal_span: number,
+    vertical_span: number,
     note: string
 }
 

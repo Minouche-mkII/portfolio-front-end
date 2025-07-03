@@ -4,6 +4,7 @@
 <nav>
     <a href="/admin/computer-data-list">Modifier les données de l'ordinateur</a>
     <a href="/admin/images">Gérer les images</a>
+    <a href="/admin/gallery">Editer la gallerie</a>
 </nav>
 
 

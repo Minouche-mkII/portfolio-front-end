@@ -100,7 +100,9 @@
     <h2>Carte</h2>
     <section id="cardSection">
         <img class="imagePreview" {src} {alt}/>
-        <ImageForm bind:content={computerData.illustration_src}/>
+        <ImageForm onSelected={(newPath, newAlt) => {
+            computerData.illustration_src = `${newPath}<->${newAlt}`
+        }}/>
         <label for="name">Nom : </label>
         <input bind:value="{computerData.name}" id="name" name="name"/>
         <label for="folder">Dossier : </label>

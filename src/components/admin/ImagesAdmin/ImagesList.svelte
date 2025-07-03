@@ -87,7 +87,7 @@
 
 <section id="ImagesAdmin">
     <div id="newImageForm">
-        <input id="file-upload" type="file" accept="image/png, image/jpg, image/webp" />
+        <input id="file-upload" type="file" accept="image/png, image/jpg, image/webp, image/gif" />
         <label>
             alt :
             <input bind:value={alt}/>

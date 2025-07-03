@@ -5,13 +5,13 @@
     import type {Image} from "../../../../types/dto/image_dto";
 
     type props = {
-        content: string
+        onSelected: (path: string, alt: string) => void
     }
-    let {content = $bindable()} : props = $props()
+    let {onSelected} : props = $props()
     let opened = $state(false)
 
     function selectImage (selectedImage: Image) {
-        content = `${selectedImage.path}<->${selectedImage.alt}`
+        onSelected(selectedImage.path, selectedImage.alt)
         opened = false
     }
 </script>

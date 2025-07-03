@@ -14,8 +14,7 @@ export async function uploadImage(file: File, alt: string): Promise<string> {
     const response = await fetch(`${BACKEND_URL}images/new`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'multipart/form-data',
-            "Authorization": getBearerToken(),
+            "authorization": getBearerToken(),
         },
         body: formData,
     })
@@ -34,7 +33,6 @@ export async function getAllImages(): Promise<Image[]> {
         }
     })
     if(!response.ok) {
-        console.log(response.statusText);
         throw new HttpError(response.status, response.statusText);
     }
     return response.json();

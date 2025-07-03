@@ -26,7 +26,9 @@
 {#if detail.type === "row"}
     <input bind:value={detail.content}>
 {:else if detail.type ==="image"}
-    <ImageForm bind:content={detail.content}/>
+    <ImageForm onSelected={(newPath, newAlt) => {
+        detail.content = `${newPath}<->${newAlt}`
+    }}/>
 {:else if detail.type === "paragraph"}
     <textarea bind:value={detail.content}></textarea>
 {:else if detail.type === "title"}
@@ -38,7 +40,9 @@
 {:else if detail.type === "column"}
     <input bind:value={detail.content} />
 {:else if detail.type === "image-badge"}
-    <ImageForm bind:content={detail.content}/>
+    <ImageForm onSelected={(newPath, newAlt) => {
+        detail.content = `${newPath}<->${newAlt}`
+    }}/>
 {:else if detail.type === "text-badge"}
     <input bind:value={detail.content}>
 {/if}

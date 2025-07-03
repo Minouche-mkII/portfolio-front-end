@@ -18,7 +18,7 @@ export async function getPageById(id: string){
     return (await response.json()) as PageDTO;
 }
 
-export async function getAllPages(id: string){
+export async function getAllPages(){
     let response = await fetch(BACKEND_URL+"gallery");
     if(!response.ok){
         throw new HttpError(response.status, response.statusText);
