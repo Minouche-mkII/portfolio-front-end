@@ -74,8 +74,8 @@
             <button onclick={() => page.images.splice(index, 1)}>supprimer</button>
         </div>
     {/each}
-    <div class="editorbuttons">
-        <button onclick={addImage}>ajouterImage</button>
+    <div class="editor-buttons">
+        <button onclick={addImage}>ajouter une image</button>
         <button onclick={submit}>soumettre</button>
         {#if page._id !== ""}
             <button onclick={deleteThisPage}>supprimer cette page</button>
@@ -90,7 +90,7 @@
     .gallery-image-form {
         margin: 1em;
     }
-    .editorbuttons {
+    .editor-buttons {
         margin-left: 1em;
     }
 </style>
