@@ -2,6 +2,7 @@
 
     import type {GalleryImageDTO} from "../../../types/dto/page-dto";
     import {BACKEND_URL} from "$lib/config";
+    import ImageCardComponent from "./ImageCardComponent.svelte";
 
     type Props = {
         image: GalleryImageDTO
@@ -9,11 +10,23 @@
     let { image } : Props = $props()
     let style = $derived(`grid-column: span ${image.horizontal_span}; grid-row: span ${image.vertical_span};`)
     let imgRatio = $derived(`aspect-ratio:${image.horizontal_span} / ${image.vertical_span} ;`)
+    let modal = $state(false)
+    function openModal() {
+        modal = true
+    }
+
+    function closeModal() {
+        modal = false
+    }
 </script>
 
-<div role="button" class="image-preview" {style}>
+<div role="button" class="image-preview" {style} tabindex="0" onclick={openModal}>
     <img style="{imgRatio}" src="{BACKEND_URL+image.src}" alt="{image.alt}">
 </div>
+
+{#if modal}
+    <ImageCardComponent {image} onRemove={closeModal}/>
+{/if}
 
 <style>
     .image-preview {
