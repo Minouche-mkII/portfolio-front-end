@@ -1,4 +1,4 @@
-import type {GalleryImageDTO, PageDTO} from "../../../types/dto/page-dto";
+import type {PageDTO} from "../../../types/dto/page-dto";
 import {getAllPagesIds, getPageById} from "../../api/gallery/get-pages-service";
 
 let loadedPages = new Map<string, PageDTO>();

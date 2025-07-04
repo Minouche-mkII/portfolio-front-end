@@ -1,6 +1,6 @@
 <script lang="ts">
     import type {PageDTO} from "../../../types/dto/page-dto";
-    import GalleryImageComponent from "../../admin/Gallery/GalleryImageComponent.svelte";
+    import GalleryImageComponent from "./GalleryImageComponent.svelte";
 
     type Props = {
         page: PageDTO
@@ -19,5 +19,6 @@
     .galleryPage {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
+        padding: 1em;
     }
 </style>

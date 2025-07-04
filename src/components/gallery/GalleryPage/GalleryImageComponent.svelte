@@ -20,6 +20,11 @@
         margin: 7px;
         cursor: pointer;
         user-select: none;
+        transition: 0.5s ease;
+    }
+    .image-preview:hover {
+        transform: scale(1.15);
+        box-shadow: 0 0 5em 1em rgba(0, 0, 0, 1);
     }
     img {
         width: 100%;
