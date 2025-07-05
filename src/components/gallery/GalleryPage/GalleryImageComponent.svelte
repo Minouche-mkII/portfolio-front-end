@@ -53,14 +53,15 @@
 
 <style>
     .image-preview {
-        margin: 7px;
+        margin: 5px;
         cursor: pointer;
         user-select: none;
-        transition: 0.5s ease;
+        transition: 0.2s ease;
     }
     .image-preview:hover {
-        transform: scale(1.15);
+        transform: scale(1.1);
         box-shadow: 0 0 5em 1em rgba(0, 0, 0, 1);
+        z-index: 100;
     }
     img {
         width: 100%;

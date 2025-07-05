@@ -56,9 +56,13 @@
 <style>
     .page {
         background-color: white;
+        border-radius: 0 15px 15px 0;
         aspect-ratio: 1 / 1;
         height: 90vh;
         margin: 0 auto;
+        padding-bottom: 1em;
+        padding-left: 2em;
+        box-shadow:  0 0 3em 2em rgba(0, 0, 0, 1);
     }
     .book {
         display: flex;
@@ -76,14 +80,16 @@
         color: white;
         font-size: 20px;
         transition: 0.2s ease;
+        height: 30vh;
+        margin: auto 2em auto 2em;
     }
     button:hover {
         transform: scale(1.4, 1);
     }
     #left-button {
-        border-radius: 50% 0 0 50%;
+        border-radius: 50% 10px 10px 50%;
     }
     #right-button {
-        border-radius: 0 50% 50% 0;
+        border-radius: 10px 50% 50% 10px;
     }
 </style>

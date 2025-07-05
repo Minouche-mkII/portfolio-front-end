@@ -170,14 +170,23 @@
 </div>
 
 <style>
+    @keyframes fadeIn {
+        from {
+            background-color: rgba(0, 0, 0, 0);
+        }
+        to {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+    }
     .background {
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.4);
         z-index: 1000;
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
+        animation: fadeIn 0.5s;
     }
     .collide-card {
         position: fixed;
@@ -186,7 +195,7 @@
         left: 50%;
         z-index: 1001;
         perspective: 1200px;
-        animation: take-animation 0.8s;
+        animation: take-animation 0.5s;
 
     }
     .card {
@@ -196,7 +205,7 @@
         cursor: pointer;
     }
     .inner-card {
-        transition: transform 0.6s;
+        transition: transform 0.3s;
         transform-style: preserve-3d;
         user-select: none;
     }
@@ -209,7 +218,7 @@
         max-height: 80vh;
         -webkit-backface-visibility: hidden; /* Safari */
         backface-visibility: hidden;
-        animation: img-take-animation 0.8s;
+        animation: img-take-animation 0.5s;
     }
     .card-back {
         position: absolute;
