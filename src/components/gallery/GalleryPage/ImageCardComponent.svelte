@@ -46,9 +46,14 @@
 </script>
 
 <div class="background" tabindex="0" role="button" onclick={remove} >
-    <div class="card" onmousemove={mouseEffect} onmouseleave={mouseLeave} onclick={flip} >
-        <div class="inner-card" style="{cardStyle}">
-            <img src="{BACKEND_URL+image.src}" alt="{image.alt}">
+    <div class="collide-card" onmousemove={mouseEffect} onmouseleave={mouseLeave}>
+        <div class="card" style="{cardStyle}" onclick={flip}>
+            <div class="inner-card {flipped ? 'flipped' : ''}">
+                <img src="{BACKEND_URL+image.src}" alt="{image.alt}">
+                <div class="card-back">
+                    <p>{image.note}</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -63,7 +68,7 @@
         width: 100%;
         height: 100%;
     }
-    .card {
+    .collide-card {
         position: fixed;
         transform: translate(-50%, -50%);
         top: 50%;
@@ -71,16 +76,44 @@
         z-index: 1001;
         perspective: 1200px;
     }
-    .inner-card {
+    .card {
         width: 100%;
         height: 100%;
         transform-style: preserve-3d;
+        cursor: pointer;
+    }
+    .inner-card {
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        user-select: none;
+    }
+    .flipped {
+        transform: rotateY(180deg);
     }
     img {
         object-fit: contain;
-        max-width: 90vw;
-        max-height: 90vh;
+        max-width: 80vw;
+        max-height: 80vh;
         min-width: auto;
         min-height: auto;
+        -webkit-backface-visibility: hidden; /* Safari */
+        backface-visibility: hidden;
+    }
+    .card-back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden; /* Safari */
+        backface-visibility: hidden;
+        background-color: white;
+        transform: rotateY(180deg);
+        color: black;
+    }
+    .card-back p {
+        text-align: center;
+        margin: 20px;
+        font-size: 30px;
     }
 </style>
