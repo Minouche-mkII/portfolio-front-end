@@ -1,12 +1,23 @@
 <script lang="ts">
     import type {GalleryImageDTO} from "../../../types/dto/page-dto";
     import {BACKEND_URL} from "$lib/config";
+    import {onMount} from "svelte";
 
     type Props = {
-        image: GalleryImageDTO
-        onRemove: () => void
+        image: GalleryImageDTO,
+        onRemove: () => void,
+        origin: {
+            x: number,
+            y: number,
+            mouseX: number,
+            mouseY: number,
+            baseWidth: number,
+            baseHeight: number,
+            naturalWidth: number,
+            naturalHeight: number
+        }
     }
-    let {image, onRemove} : Props = $props()
+    let {image, onRemove, origin} : Props = $props()
 
     let flipped = $state(false)
     function flip() {
@@ -22,6 +33,7 @@
     let rotateX = $state(0)
     let rotateY = $state(0)
     let brightness = $state(1)
+    let animating = true
 
     function mouseEffect(event: MouseEvent) {
         const card = event.currentTarget as HTMLElement
@@ -35,6 +47,52 @@
         brightness = ( rotateY ) / 4 + 1
     }
 
+    // un véritable bricolage pour continuer a incliner la carte pendant l'animation
+    function whileAnimating() {
+        let mouseX = origin.mouseX
+        let mouseY = origin.mouseY
+        const target = document.getElementById("current-card-modal") as HTMLElement
+        function mouseMove(event: MouseEvent) {
+            mouseX = event.clientX
+            mouseY = event.clientY
+        }
+        window.addEventListener("mousemove", mouseMove)
+
+        const interval = setInterval(() => {
+            if(!animating) {
+                window.removeEventListener("mousemove", mouseMove)
+                clearInterval(interval)
+                return
+            }
+            const falseEvent = new MouseEvent('mousemove', {
+                bubbles: true,
+                cancelable: true,
+                clientX: mouseX,
+                clientY: mouseY
+            });
+            if(inBounds(mouseX, mouseY, target)) {
+                target.dispatchEvent(falseEvent)
+            } else {
+                mouseLeave()
+            }
+        }, 8)
+    }
+
+    function inBounds(mouseX: number, mouseY: number, element: HTMLElement) {
+        const coordinates = element.getBoundingClientRect()
+        const maxX = coordinates.x + coordinates.width
+        const maxY = coordinates.y + coordinates.height
+        return mouseX > coordinates.x && mouseX < maxX && mouseY > coordinates.y && coordinates.y < maxY
+    }
+
+    onMount(() => {
+        whileAnimating()
+    })
+
+    function animationEnd() {
+        animating = false
+    }
+
     function mouseLeave() {
         rotateX = 0
         rotateY = 0
@@ -43,10 +101,63 @@
 
     let cardStyle = $derived(`transform: rotateX(${rotateY*20}deg) rotateY(${rotateX*20}deg); filter: brightness(${brightness})`)
 
+    let finalWidth = origin.naturalWidth
+    let finalHeight = origin.naturalHeight
+    const ratio = finalWidth / finalHeight
+    const maxWidth = window.innerWidth * 0.8;
+    const maxHeight = window.innerHeight * 0.8
+    const screenRatio = maxWidth / maxHeight
+
+    if(finalWidth * screenRatio < finalHeight) {
+        if(finalWidth > maxWidth) {
+            finalWidth = maxWidth
+            finalHeight = finalWidth / ratio
+        }
+    } else {
+        if(finalHeight > maxHeight) {
+            finalHeight = maxHeight
+            finalWidth = finalHeight * ratio
+        }
+    }
+
+    const keyFrames = `
+        <style>
+            @keyframes take-animation {
+                from {
+                    left: ${origin.x}px;
+                    top: ${origin.y}px;
+                    transform: translate(0, 0);
+                }
+
+                to {
+                    transform: translate(-50%, -50%);
+                    top: 50%;
+                    left: 50%;
+                }
+            }
+            @keyframes img-take-animation {
+                from {
+                    width: ${origin.baseWidth}px;
+                    height: ${origin.baseHeight}px;
+                    object-fit: fill;
+                }
+                to {
+                    width: ${finalWidth}px;
+                    height: ${finalHeight}px;
+                    object-fit: fill;
+                }
+            }
+        </style>`
+
 </script>
 
+
+<svelte:head>
+    {@html keyFrames}
+</svelte:head>
+
 <div class="background" tabindex="0" role="button" onclick={remove} >
-    <div class="collide-card" onmousemove={mouseEffect} onmouseleave={mouseLeave}>
+    <div class="collide-card"  onmousemove={mouseEffect} onmouseleave={mouseLeave} onanimationend={animationEnd} id="current-card-modal">
         <div class="card" style="{cardStyle}" onclick={flip}>
             <div class="inner-card {flipped ? 'flipped' : ''}">
                 <img src="{BACKEND_URL+image.src}" alt="{image.alt}">
@@ -75,6 +186,8 @@
         left: 50%;
         z-index: 1001;
         perspective: 1200px;
+        animation: take-animation 0.8s;
+
     }
     .card {
         width: 100%;
@@ -94,10 +207,9 @@
         object-fit: contain;
         max-width: 80vw;
         max-height: 80vh;
-        min-width: auto;
-        min-height: auto;
         -webkit-backface-visibility: hidden; /* Safari */
         backface-visibility: hidden;
+        animation: img-take-animation 0.8s;
     }
     .card-back {
         position: absolute;
