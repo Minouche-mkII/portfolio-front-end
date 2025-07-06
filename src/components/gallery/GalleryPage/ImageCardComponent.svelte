@@ -169,9 +169,10 @@
             background.style.animation = 'none'
             card.offsetWidth
             img.offsetWidth
-            background.style.animation = 'fadeIn 0.3s reverse'
-            card.style.animation = 'take-animation 0.3s ease reverse both'
-            img.style.animation = 'img-take-animation 0.3s ease reverse both'
+            background.offsetWidth
+            background.style.animation = 'fadeIn 0.3s linear reverse both'
+            card.style.animation = 'take-animation 0.3s linear reverse both'
+            img.style.animation = 'img-take-animation 0.3s linear reverse both'
             whileAnimating(true, event.clientX, event.clientY)
         }
     }
