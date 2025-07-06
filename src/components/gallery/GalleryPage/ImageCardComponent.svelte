@@ -1,7 +1,7 @@
 <script lang="ts">
     import type {GalleryImageDTO} from "../../../types/dto/page-dto";
     import {BACKEND_URL} from "$lib/config";
-    import {onMount} from "svelte";
+    import {onMount, tick} from "svelte";
 
     type Props = {
         image: GalleryImageDTO,
@@ -24,16 +24,11 @@
         flipped = !flipped
     }
 
-    function remove(event: MouseEvent){
-        if(event.target === event.currentTarget) {
-            onRemove()
-        }
-    }
-
     let rotateX = $state(0)
     let rotateY = $state(0)
     let brightness = $state(1)
     let animating = true
+    let reverseAnimation = $state(false)
 
     function mouseEffect(event: MouseEvent) {
         const card = event.currentTarget as HTMLElement
@@ -48,9 +43,13 @@
     }
 
     // un véritable bricolage pour continuer a incliner la carte pendant l'animation
-    function whileAnimating() {
+    function whileAnimating(reverse: boolean, x: number, y:number) {
         let mouseX = origin.mouseX
         let mouseY = origin.mouseY
+        if(reverse) {
+            mouseX = x
+            mouseY = y
+        }
         const target = document.getElementById("current-card-modal") as HTMLElement
         function mouseMove(event: MouseEvent) {
             mouseX = event.clientX
@@ -62,6 +61,9 @@
             if(!animating) {
                 window.removeEventListener("mousemove", mouseMove)
                 clearInterval(interval)
+                if(reverseAnimation) {
+                    onRemove()
+                }
                 return
             }
             const falseEvent = new MouseEvent('mousemove', {
@@ -86,7 +88,7 @@
     }
 
     onMount(() => {
-        whileAnimating()
+        whileAnimating(false, 0, 0)
     })
 
     function animationEnd() {
@@ -149,6 +151,26 @@
             }
         </style>`
 
+    async function remove(event: MouseEvent){
+        if(event.target === event.currentTarget) {
+            reverseAnimation = true
+            animating = true
+            const card = document.getElementById("current-card-modal") as HTMLElement
+            const img = card.querySelector('img') as HTMLImageElement
+            const background = document.querySelector(".background") as HTMLElement
+            card.style.animation = 'none'
+            img.style.animation = 'none'
+            background.style.animation = 'none'
+            background.style.animation = 'none'
+            card.offsetWidth
+            img.offsetWidth
+            background.style.animation = 'fadeIn 0.3s reverse'
+            card.style.animation = 'take-animation 0.3s ease reverse both'
+            img.style.animation = 'img-take-animation 0.3s ease reverse both'
+            whileAnimating(true, event.clientX, event.clientY)
+        }
+    }
+
 </script>
 
 
@@ -157,7 +179,12 @@
 </svelte:head>
 
 <div class="background" tabindex="0" role="button" onclick={remove} >
-    <div class="collide-card"  onmousemove={mouseEffect} onmouseleave={mouseLeave} onanimationend={animationEnd} id="current-card-modal">
+    <div class="collide-card"
+         onmousemove={mouseEffect}
+         onmouseleave={mouseLeave}
+         onanimationend={animationEnd}
+         id="current-card-modal"
+    >
         <div class="card" style="{cardStyle}" onclick={flip}>
             <div class="inner-card {flipped ? 'flipped' : ''}">
                 <img src="{BACKEND_URL+image.src}" alt="{image.alt}">
@@ -196,7 +223,6 @@
         z-index: 1001;
         perspective: 1200px;
         animation: take-animation 0.5s;
-
     }
     .card {
         width: 100%;
