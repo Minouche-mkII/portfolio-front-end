@@ -1,7 +1,7 @@
 <script lang="ts">
     import type {GalleryImageDTO} from "../../../types/dto/page-dto";
     import {BACKEND_URL} from "$lib/config";
-    import {onMount, tick} from "svelte";
+    import {onMount} from "svelte";
 
     type Props = {
         image: GalleryImageDTO,
@@ -151,8 +151,14 @@
             }
         </style>`
 
-    async function remove(event: MouseEvent){
+    let closing = false
+
+    function remove(event: MouseEvent) {
         if(event.target === event.currentTarget) {
+            if(closing) {
+                return
+            }
+            closing = true
             reverseAnimation = true
             animating = true
             const card = document.getElementById("current-card-modal") as HTMLElement
@@ -160,7 +166,6 @@
             const background = document.querySelector(".background") as HTMLElement
             card.style.animation = 'none'
             img.style.animation = 'none'
-            background.style.animation = 'none'
             background.style.animation = 'none'
             card.offsetWidth
             img.offsetWidth

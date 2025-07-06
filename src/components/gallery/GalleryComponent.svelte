@@ -6,29 +6,18 @@
     import GalleryPageComponent from "./GalleryPage/GalleryPageComponent.svelte";
     import type {ImageOrigin} from "../../types/business/gallery/image_origin_type";
     import ImageCardComponent from "./GalleryPage/ImageCardComponent.svelte";
+    import GalleryBookComponent from "./GalleryBookComponent.svelte";
 
     let pageList: string[] | undefined = $state()
     let pageIndex = $state(0)
-    let currentPage: PageDTO | undefined = $state(undefined)
 
     let errorLoadingIds = $state(false)
-    let errorLoadingPage = $state(false)
     onMount(() => {
         getPageList().then((pagesId) => {
             pageList = pagesId
         }).catch((e) => {
             errorLoadingIds = true
         })
-    })
-    $effect(() => {
-        if(pageList) {
-            getPage(pageList[pageIndex]).then((page) => {
-                currentPage = page
-                errorLoadingPage = false
-            }).catch((e) => {
-                errorLoadingPage = true
-            })
-        }
     })
 
     let modal = $state(false)
@@ -78,13 +67,7 @@
         <p>An error occurred</p>
     {:else if pageList}
         <div class="book">
-            <div class="page">
-                {#if errorLoadingPage}
-                    <p>An error occurred</p>
-                {:else if currentPage}
-                    <GalleryPageComponent page={currentPage} />
-                {/if}
-            </div>
+            <GalleryBookComponent {pageList} {pageIndex} />
             {@render buttonDiv()}
         </div>
     {:else}
@@ -99,16 +82,7 @@
     </div>
 {/snippet}
 <style>
-    .page {
-        background-color: white;
-        border-radius: 0 15px 15px 0;
-        aspect-ratio: 1 / 1;
-        height: 90vh;
-        margin: 0 auto;
-        padding-bottom: 1em;
-        padding-left: 2em;
-        box-shadow:  0 0 3em 2em rgba(0, 0, 0, 1);
-    }
+
     .book {
         display: flex;
         margin: auto;
