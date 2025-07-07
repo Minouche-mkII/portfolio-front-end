@@ -179,7 +179,6 @@
 
 </script>
 
-
 <svelte:head>
     {@html keyFrames}
 </svelte:head>

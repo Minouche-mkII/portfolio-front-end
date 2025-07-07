@@ -56,6 +56,18 @@
     let leftButtonDisabled = $derived(pageIndex <= 0)
 
     setContext("modal-card", openModal)
+
+    let fromDirection = $state("")
+
+    function nextPage() {
+        fromDirection = "next"
+        pageIndex++
+    }
+
+    function previousPage() {
+        fromDirection = "previous"
+        pageIndex--
+    }
 </script>
 
 {#if modal}
@@ -67,7 +79,7 @@
         <p>An error occurred</p>
     {:else if pageList}
         <div class="book">
-            <GalleryBookComponent {pageList} {pageIndex} />
+            <GalleryBookComponent {pageList} {pageIndex} {fromDirection} />
             {@render buttonDiv()}
         </div>
     {:else}
@@ -77,8 +89,8 @@
 
 {#snippet buttonDiv()}
     <div id="buttons-div">
-        <button id="right-button" onclick={() => pageIndex++} disabled={rightButtonDisabled}>&#x3E;&#x3E;</button>
-        <button id="left-button" onclick={() => pageIndex--} disabled={leftButtonDisabled}>&#x3C;&#x3C;</button>
+        <button id="right-button" onclick={nextPage} disabled={rightButtonDisabled}>&#x3E;&#x3E;</button>
+        <button id="left-button" onclick={previousPage} disabled={leftButtonDisabled}>&#x3C;&#x3C;</button>
     </div>
 {/snippet}
 <style>

@@ -2,16 +2,20 @@
     import {getPage} from "../../services/business/computer-data/gallery-loader-service.svelte";
     import type {PageDTO} from "../../types/dto/page-dto";
     import GalleryPageComponent from "./GalleryPage/GalleryPageComponent.svelte";
+    import {tick} from "svelte";
 
     type Props = {
         pageList: string[],
-        pageIndex: number
+        pageIndex: number,
+        fromDirection: string
     }
 
-    let { pageList, pageIndex } : Props = $props()
+    let { pageList, pageIndex, fromDirection } : Props = $props()
 
     let currentPage: PageDTO | undefined = $state(undefined)
     let errorLoadingPage = $state(false)
+    let previousPage: PageDTO | undefined | null = $state(undefined)
+    let nextPage: PageDTO | undefined | null = $state(undefined)
     $effect(() => {
         if(pageList) {
             getPage(pageList[pageIndex]).then((page) => {
@@ -20,18 +24,98 @@
             }).catch((e) => {
                 errorLoadingPage = true
             })
+            if(fromDirection === "previous") {
+                nextPage = {
+                    _id: "",
+                    images: []
+                }
+                animateNextPage()
+                getPage(pageList[pageIndex+1]).then((page) => {
+                    nextPage = page
+                })
+            } else {
+                nextPage = null
+            }
+            if (fromDirection === "next") {
+                previousPage = {
+                    _id: "",
+                    images: []
+                }
+                animatePreviousPage()
+                getPage(pageList[pageIndex-1]).then((page) => {
+                    previousPage = page
+                })
+            } else {
+                previousPage = null
+            }
         }
     })
+
+    const pageBehindKeyFrame = {
+        transform: "rotateY(-360deg)",
+        zIndex: "-1"
+    }
+
+    const pageMidTransitionFrame = {
+        transform: "translate(-100%) rotateY(-180deg)",
+        zIndex: "-1"
+    }
+
+    const pageCurrentKeyFrame = {
+        zIndex: "3"
+    }
+
+    const animParameters = {
+        duration: 500,
+        easing: "cubic-bezier(0.5, -0.5, 1, 1.5)"
+    }
+
+    async function animatePreviousPage() {
+        await tick()
+        const elementPreviousPage = document.getElementById("previous-page") as HTMLElement
+        const animation = elementPreviousPage.animate(
+            [
+                pageCurrentKeyFrame,
+                pageMidTransitionFrame,
+                pageBehindKeyFrame
+            ],
+            animParameters
+        )
+        animation.finished.then(() => previousPage = null)
+    }
+
+    async function animateNextPage() {
+        await tick()
+        const elementCurrentPage = document.getElementById("current-page") as HTMLElement
+        const animation = elementCurrentPage.animate(
+            [
+                pageBehindKeyFrame,
+                pageMidTransitionFrame,
+                pageCurrentKeyFrame
+            ],
+            animParameters
+        )
+        animation.finished.then(() => previousPage = null)
+    }
 </script>
 
-
-<div class="page">
+{#if previousPage}
+    <div class="page" id="previous-page">
+        <GalleryPageComponent page={previousPage} />
+    </div>
+{/if}
+<div class="page" id="current-page">
     {#if errorLoadingPage}
         <p>An error occurred</p>
     {:else if currentPage}
         <GalleryPageComponent page={currentPage} />
     {/if}
 </div>
+{#if nextPage}
+    <div class="page" id="next-page">
+        <GalleryPageComponent page={nextPage} />
+    </div>
+{/if}
 
 <style>
     .page {
@@ -43,5 +127,16 @@
         padding-bottom: 1em;
         padding-left: 2em;
         box-shadow:  0 0 3em 2em rgba(0, 0, 0, 1);
+    }
+    #current-page {
+        position: relative;
+    }
+    #previous-page {
+        position: absolute;
+        z-index: +1;
+    }
+    #next-page {
+        position: absolute;
+        z-index: -1;
     }
 </style>
