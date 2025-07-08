@@ -89,8 +89,8 @@
 
 {#snippet buttonDiv()}
     <div id="buttons-div">
-        <button id="right-button" onclick={nextPage} disabled={rightButtonDisabled}>&#x3E;&#x3E;</button>
         <button id="left-button" onclick={previousPage} disabled={leftButtonDisabled}>&#x3C;&#x3C;</button>
+        <button id="right-button" onclick={nextPage} disabled={rightButtonDisabled}>&#x3E;&#x3E;</button>
     </div>
 {/snippet}
 <style>
@@ -123,12 +123,13 @@
         border-color: gray;
     }
     button:hover:enabled {
-        transform: scale(1.4, 1);
+        width: 4em;
+        margin: auto 1.5em auto 1.5em;
     }
     #left-button {
-        border-radius: 0 0 1em 3em;
+        border-radius: 1em 3em 0 0;
     }
     #right-button {
-        border-radius: 1em 3em 0 0;
+        border-radius: 0 0 1em 3em;
     }
 </style>

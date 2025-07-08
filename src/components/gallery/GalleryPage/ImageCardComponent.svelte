@@ -1,7 +1,7 @@
 <script lang="ts">
     import type {GalleryImageDTO} from "../../../types/dto/page-dto";
     import {BACKEND_URL} from "$lib/config";
-    import {onMount} from "svelte";
+    import {onMount, tick} from "svelte";
 
     type Props = {
         image: GalleryImageDTO,
@@ -29,6 +29,8 @@
     let brightness = $state(1)
     let animating = true
     let reverseAnimation = $state(false)
+
+    let transitionStyle = $state("")
 
     function mouseEffect(event: MouseEvent) {
         const card = event.currentTarget as HTMLElement
@@ -95,13 +97,29 @@
         animating = false
     }
 
-    function mouseLeave() {
+    let doNotRemoveTransition = false
+
+    async function mouseLeave() {
+        doNotRemoveTransition = true
+        transitionStyle = "transition: all 0.2s ease-out;"
+        setTimeout(() => {
+            doNotRemoveTransition = false
+        }, 200)
+        await tick()
         rotateX = 0
         rotateY = 0
         brightness = 1
     }
 
-    let cardStyle = $derived(`transform: rotateX(${rotateY*20}deg) rotateY(${rotateX*20}deg); filter: brightness(${brightness})`)
+    async function mouseEnter() {
+        setTimeout(() => {
+            if(!doNotRemoveTransition) {
+                transitionStyle = ""
+            }
+        }, 200)
+    }
+
+    let cardStyle = $derived(`transform: rotateX(${rotateY*20}deg) rotateY(${rotateX*20}deg); filter: brightness(${brightness});`)
 
     let finalWidth = origin.naturalWidth
     let finalHeight = origin.naturalHeight
@@ -187,10 +205,11 @@
     <div class="collide-card"
          onmousemove={mouseEffect}
          onmouseleave={mouseLeave}
+         onmouseenter={mouseEnter}
          onanimationend={animationEnd}
          id="current-card-modal"
     >
-        <div class="card" style="{cardStyle}" onclick={flip}>
+        <div class="card" style="{cardStyle} {transitionStyle}" onclick={flip}>
             <div class="inner-card {flipped ? 'flipped' : ''}">
                 <img src="{BACKEND_URL+image.src}" alt="{image.alt}">
                 <div class="card-back">

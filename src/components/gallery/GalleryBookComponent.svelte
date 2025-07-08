@@ -67,7 +67,7 @@
 
     const animParameters = {
         duration: 500,
-        easing: "cubic-bezier(0.5, -0.5, 1, 1.5)"
+        easing: "cubic-bezier(0.5, -0.3, 1, 1.3)"
     }
 
     async function animatePreviousPage() {
@@ -95,7 +95,7 @@
             ],
             animParameters
         )
-        animation.finished.then(() => previousPage = null)
+        animation.finished.then(() => nextPage = null)
     }
 </script>
 
@@ -127,6 +127,20 @@
         padding-bottom: 1em;
         padding-left: 2em;
         box-shadow:  0 0 3em 2em rgba(0, 0, 0, 1);
+        -webkit-backface-visibility: hidden; /* Safari */
+        backface-visibility: hidden;
+        transform-style: preserve-3d;
+    }
+    .page:after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background-color: white;
+        -webkit-backface-visibility: hidden; /* Safari */
+        backface-visibility: hidden;
+        transform: rotateY(180deg);
+        transform-style: preserve-3d;
     }
     #current-page {
         position: relative;
