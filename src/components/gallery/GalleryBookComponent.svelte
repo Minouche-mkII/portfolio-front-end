@@ -4,6 +4,8 @@
     import GalleryPageComponent from "./GalleryPage/GalleryPageComponent.svelte";
     import {tick} from "svelte";
 
+    const pageAnimDuration = 500
+
     type Props = {
         pageList: string[],
         pageIndex: number,
@@ -18,12 +20,14 @@
     let nextPage: PageDTO | undefined | null = $state(undefined)
     $effect(() => {
         if(pageList) {
-            getPage(pageList[pageIndex]).then((page) => {
-                currentPage = page
-                errorLoadingPage = false
-            }).catch((e) => {
-                errorLoadingPage = true
-            })
+            if(pageIndex != -1) {
+                getPage(pageList[pageIndex]).then((page) => {
+                    currentPage = page
+                    errorLoadingPage = false
+                }).catch((e) => {
+                    errorLoadingPage = true
+                })
+            }
             if(fromDirection === "previous") {
                 nextPage = {
                     _id: "",
@@ -41,10 +45,12 @@
                     _id: "",
                     images: []
                 }
+                if(pageIndex != 0) {
+                    getPage(pageList[pageIndex - 1]).then((page) => {
+                        previousPage = page
+                    })
+                }
                 animatePreviousPage()
-                getPage(pageList[pageIndex-1]).then((page) => {
-                    previousPage = page
-                })
             } else {
                 previousPage = null
             }
@@ -66,7 +72,7 @@
     }
 
     const animParameters = {
-        duration: 500,
+        duration: pageAnimDuration,
         easing: "cubic-bezier(0.5, -0.3, 1, 1.3)"
     }
 
@@ -100,17 +106,29 @@
 </script>
 
 {#if previousPage}
-    <div class="page" id="previous-page">
-        <GalleryPageComponent page={previousPage} />
+    {#if pageIndex === 0}
+        <div class="page cover" id="previous-page">
+            <h1>Gallery</h1>
+        </div>
+    {:else}
+        <div class="page" id="previous-page">
+            <GalleryPageComponent page={previousPage} />
+        </div>
+    {/if}
+{/if}
+{#if pageIndex === -1}
+    <div class="cover page" id="current-page">
+        <h1>Gallery</h1>
+    </div>
+{:else}
+    <div class="page" id="current-page">
+        {#if errorLoadingPage}
+            <p>An error occurred</p>
+        {:else if currentPage}
+            <GalleryPageComponent page={currentPage} />
+        {/if}
     </div>
 {/if}
-<div class="page" id="current-page">
-    {#if errorLoadingPage}
-        <p>An error occurred</p>
-    {:else if currentPage}
-        <GalleryPageComponent page={currentPage} />
-    {/if}
-</div>
 {#if nextPage}
     <div class="page" id="next-page">
         <GalleryPageComponent page={nextPage} />
@@ -152,5 +170,9 @@
     #next-page {
         position: absolute;
         z-index: -1;
+    }
+    .page.cover {
+        background-color: rgb(255, 89, 0);
+        color: white;
     }
 </style>

@@ -9,7 +9,7 @@
     import GalleryBookComponent from "./GalleryBookComponent.svelte";
 
     let pageList: string[] | undefined = $state()
-    let pageIndex = $state(0)
+    let pageIndex = $state(-1)
 
     let errorLoadingIds = $state(false)
     onMount(() => {
@@ -53,7 +53,7 @@
     }
 
     let rightButtonDisabled = $derived(pageList ? (pageIndex > pageList.length - 2): true)
-    let leftButtonDisabled = $derived(pageIndex <= 0)
+    let leftButtonDisabled = $derived(pageIndex <= -1)
 
     setContext("modal-card", openModal)
 
@@ -94,7 +94,6 @@
     </div>
 {/snippet}
 <style>
-
     .book {
         display: flex;
         margin: auto;
@@ -125,6 +124,12 @@
     button:hover:enabled {
         width: 4em;
         margin: auto 1.5em auto 1.5em;
+    }
+    #left-button:hover:enabled {
+        border-radius: 1em 3em 6px 6px;
+    }
+    #right-button:hover:enabled {
+        border-radius: 6px 6px 1em 3em;
     }
     #left-button {
         border-radius: 1em 3em 0 0;
