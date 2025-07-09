@@ -1,8 +1,12 @@
 # Portfolio front-end
 
 ## env file
+
+dev :
 VITE_BACKEND_URL
-VITE_PRODUCTION (boolean)
+
+prod (docker) :
+BACKEND_URL
 
 ## run
 

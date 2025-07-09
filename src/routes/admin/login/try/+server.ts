@@ -1,6 +1,5 @@
 import {serverSideAuth} from "../../../../services/api/server-side/server-side-auth-service";
 import {HttpError} from "../../../../services/utils/http_error";
-import {PRODUCTION} from "$lib/config";
 
 export async function POST({ request, cookies }) {
     type Props = { password: string };
@@ -9,7 +8,7 @@ export async function POST({ request, cookies }) {
         const token = await serverSideAuth(password)
         cookies.set("token", token, {
             httpOnly: true,
-            secure: PRODUCTION,
+            secure: false,
             sameSite: 'lax',
             path: "/",
             maxAge: 60 * 60 * 2

@@ -1,1 +1,33 @@
 .env
+
+# Node modules (reinstallé dans l'image)
+node_modules
+npm-debug.log
+yarn.lock # facultatif si tu utilises npm, sinon garde-le
+
+# Dépendances locales ou liens symboliques
+*.local
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Config éditeurs
+.vscode
+.idea
+
+# Tests, documentation, etc.
+*.test.*
+*.spec.*
+coverage
+docs
+
+# Git
+.git
+.gitignore
+
+# Autres fichiers inutiles
+*.swp
+*.swo
+*.bak
+*.tmp
