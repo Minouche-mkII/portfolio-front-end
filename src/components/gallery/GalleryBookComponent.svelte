@@ -57,20 +57,6 @@
         }
     })
 
-    const pageBehindKeyFrame = {
-        transform: "rotateY(-360deg)",
-        zIndex: "-1"
-    }
-
-    const pageMidTransitionFrame = {
-        transform: "translate(-100%) rotateY(-180deg)",
-        zIndex: "-1"
-    }
-
-    const pageCurrentKeyFrame = {
-        zIndex: "3"
-    }
-
     const animParameters = {
         duration: pageAnimDuration,
         easing: "cubic-bezier(0.5, -0.3, 1, 1.3)"
@@ -84,16 +70,40 @@
         transform : "translate(0) scale(1) "
     }
 
+    const keyframes = [
+        {
+            zIndex: "3"
+        },
+        {
+            transform: "translate(-100%) rotateY(-180deg)",
+            zIndex: "-1"
+        },
+        {
+            transform: "rotateY(-360deg)",
+            zIndex: "-1"
+        }
+    ]
+
+    const spiralKeyFrames = [
+
+        {
+            transform: "translate(-50%)"
+        },
+        {
+            transform: "translate(-42%)"
+        },
+        {
+            transform: "translate(-50%)"
+        }
+    ]
+
     async function animatePreviousPage() {
         await tick()
         const elementPreviousPage = document.getElementById("previous-page") as HTMLElement
         const elementCurrentPage = document.getElementById("current-page") as HTMLElement
+        const spiralElement = document.getElementById("spirals") as HTMLElement
         const animation = elementPreviousPage.animate(
-            [
-                pageCurrentKeyFrame,
-                pageMidTransitionFrame,
-                pageBehindKeyFrame
-            ],
+            keyframes,
             animParameters
         )
         elementCurrentPage.animate(
@@ -106,6 +116,13 @@
                 easing: "ease"
             }
         )
+        spiralElement.animate(
+            spiralKeyFrames,
+            {
+                duration: pageAnimDuration,
+                easing: "ease"
+            }
+        )
         animation.finished.then(() => previousPage = null)
     }
 
@@ -113,38 +130,50 @@
         await tick()
         const elementCurrentPage = document.getElementById("current-page") as HTMLElement
         const elementNextPage = document.getElementById("next-page") as HTMLElement
+        const spiralElement = document.getElementById("spirals") as HTMLElement
+        elementCurrentPage.style.visibility = "hidden"
         const animation = elementCurrentPage.animate(
-            [
-                pageBehindKeyFrame,
-                pageMidTransitionFrame,
-                pageCurrentKeyFrame
-            ],
+            keyframes,
             animParameters
         )
+        elementNextPage.animate(
+            [
+                showedPageKeyFrame,
+                coveredPageKeyFrame
+            ],
+            {
+                duration: pageAnimDuration,
+                easing: "cubic-bezier(.19,-0.61,.92,.74)"
+            }
+        )
+        spiralElement.animate(
+            spiralKeyFrames,
+            {
+                duration: pageAnimDuration,
+                easing: "cubic-bezier(.19,-0.61,.92,.74)"
+            }
+        )
+        animation.reverse()
         setTimeout(() => {
-            elementNextPage.animate(
-                [
-                    showedPageKeyFrame,
-                    coveredPageKeyFrame
-                ],
-                {
-                    duration: pageAnimDuration/2,
-                    easing: "ease"
-                }
-            )
-        }, pageAnimDuration/2)
-
+            elementCurrentPage.style.visibility = "visible"
+        }, 150)
         animation.finished.then(() => nextPage = null)
     }
 </script>
 
 <div id="backgroundPage" class="page">
-
 </div>
+
+{#if nextPage}
+    <div class="page" id="next-page">
+        <GalleryPageComponent page={nextPage} />
+    </div>
+{/if}
 {#if previousPage}
     {#if pageIndex === 0}
         <div class="page cover" id="previous-page">
             <h1>Gallery</h1>
+            <img src="/galleryCover.webp" alt="gallery book cover" />
         </div>
     {:else}
         <div class="page" id="previous-page">
@@ -155,6 +184,7 @@
 {#if pageIndex === -1}
     <div class="cover page" id="current-page">
         <h1>Gallery</h1>
+        <img src="/galleryCover.webp" alt="gallery book cover" />
     </div>
 {:else}
     <div class="page" id="current-page">
@@ -165,15 +195,17 @@
         {/if}
     </div>
 {/if}
-{#if nextPage}
-    <div class="page" id="next-page">
-        <GalleryPageComponent page={nextPage} />
-    </div>
-{/if}
+
+
+<div id="spirals">
+    {#each { length: 8 } as _ }
+        <img class="spiral" alt="decorative book spiral" src="/spiral.webp" />
+    {/each}
+</div>
 
 <style>
     .page {
-        background-color: white;
+        background-color: #ededed;
         border-radius: 0 15px 15px 0;
         aspect-ratio: 1 / 1;
         height: 90vh;
@@ -190,7 +222,7 @@
         position: absolute;
         inset: 0;
         z-index: -1;
-        background-color: white;
+        background-color: #ededed;
         -webkit-backface-visibility: hidden; /* Safari */
         backface-visibility: hidden;
         transform: rotateY(180deg);
@@ -208,12 +240,33 @@
         z-index: -1;
     }
     .page.cover {
-        background-color: rgb(255, 89, 0);
+        background-color: var(--primary);
         color: white;
+        text-align: center;
+    }
+    .page.cover > h1 {
+        font-size: 60px;
+        margin: 2% 0 0 0;
+    }
+    .page.cover > img {
+        max-width: 100%;
+        margin: auto;
     }
     #backgroundPage {
         position: absolute;
         left: 2%;
         z-index: -10;
+    }
+    #spirals {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transform: translate(-50%);
+        height: 90vh;
+        user-select: none;
+    }
+    #spirals img {
+        z-index: 20;
     }
 </style>

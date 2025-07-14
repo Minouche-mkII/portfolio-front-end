@@ -10,7 +10,7 @@
     for(let [folder, content]  of computerData.entries()) {
         files.push({
             name: folder,
-            src: "/folderPlaceholder.png",
+            src: "/folderIcon.webp",
             alt: "folder-icon",
             createdWindow: {
                 logo: "&#128194",

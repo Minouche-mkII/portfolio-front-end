@@ -1,7 +1,25 @@
 :root {
     font-family: 'Source Sans Pro', sans-serif;
-    background: #211e1f;
-    color: lightgray;
+    background: #211b1b;
+    --background: #211b1b;
+    color: #efe9e7;
+    --font: #efe9e7;
+    --lightground: #322828;
+    --primary: #ff3700;
+    --secondary: #ff0059;
+    --accent: #00ffbb;
+}
+
+h1, h2 {
+    font-family: "Patrick Hand", sans-serif;
+}
+
+* {
+    font-family: "Quicksand", sans-serif;
+}
+
+hr {
+    color: var(--font);
 }
 
 p {
@@ -22,4 +40,27 @@ h2 {
     vertical-align: center;
     margin-left: auto;
     margin-right: auto;
+}
+
+.cool-link {
+    display: inline-block;
+    font-size: 20px;
+    border-radius: 20px;
+    padding: 5px 12px 5px 12px;
+    color: var(--font);
+    background: linear-gradient(-45deg, var(--primary), var(--secondary));
+    border : 1px solid var(--font);
+    transition:
+            box-shadow ease 0.2s,
+            transform cubic-bezier(.38,-0.71,.76,1.67) 0.2s;
+}
+
+.cool-link:hover {
+    box-shadow: 0 0 1em var(--secondary);
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    transform: scale(1.1);
+}
+.cool-link:active {
+    box-shadow: 0 0 3em var(--secondary);
+    transform: scale(1.2);
 }

@@ -10,7 +10,7 @@
 
 <style>
     a {
-        color: white;
+        color: var(--font);
         margin: 1em
     }
 </style>

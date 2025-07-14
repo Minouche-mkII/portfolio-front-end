@@ -26,6 +26,12 @@
     }
 </script>
 
-<button onclick={openDetail}>
+<button class="intern-link cool-link" onclick={openDetail}>
     {text}
 </button>
+
+<style>
+    .intern-link:after {
+        content: " \002192";
+    }
+</style>

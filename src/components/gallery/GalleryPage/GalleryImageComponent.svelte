@@ -52,7 +52,7 @@
     .image-preview:hover {
         transform: scale(1.1);
         box-shadow: 0 0 1em 10px rgba(0, 0, 0, 0.9);
-        z-index: 100;
+        z-index: 1000;
     }
     img {
         width: 100%;

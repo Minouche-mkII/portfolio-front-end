@@ -147,13 +147,23 @@
 </div>
 
 <style>
+    @keyframes windowArrive {
+        from {
+            transform: rotate(25deg) scale(0.1);
+        }
+        to {
+            transform: rotate(0deg) scale(1);
+        }
+    }
     .computer-window {
+        animation: windowArrive cubic-bezier(.12,.65,.74,1.53) 0.2s;
         border: white solid 2px;
         border-radius: 4px;
         position: fixed;
-        background-color: #151313;
+        background-color: var(--background);
         display: flex;
         flex-direction: column;
+        box-shadow: 2px 2px 6px #818181;
     }
     .window-content {
         flex: 1;
@@ -178,6 +188,6 @@
         align-self: center;
     }
     button:hover {
-        background-color: red;
+        background-color: var(--secondary);
     }
 </style>

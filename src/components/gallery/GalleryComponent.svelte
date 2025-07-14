@@ -110,8 +110,8 @@
     button {
         background-color: transparent;
         width: 3em;
-        border: white solid 3px;
-        color: white;
+        border: var(--font) solid 3px;
+        color: var(--font);
         font-size: 20px;
         transition: 0.2s ease;
         height: 50%;

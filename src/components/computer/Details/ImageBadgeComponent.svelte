@@ -12,7 +12,6 @@
     .image-badge {
         border-radius: 13px;
         border: solid 1px white;
-        background-color: #151313;
         display: flex;
         align-items: center;
         width: fit-content;
@@ -32,7 +31,7 @@
         visibility: hidden;
         opacity: 0;
         width: max-content;
-        background-color: #151313;
+        background-color: var(--lightground);
         border-radius: 6px;
         z-index: 100;
         bottom: 110%;
