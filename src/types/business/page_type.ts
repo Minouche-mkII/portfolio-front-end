@@ -3,5 +3,6 @@ export enum PageType {
     computer,
     gallery,
     aboutMe,
-    music
+    music,
+    social
 }

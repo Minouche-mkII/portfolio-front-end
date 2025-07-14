@@ -3,6 +3,8 @@
     import {PageType} from "../types/business/page_type";
     import Computer from "./computer/Computer.svelte";
     import GalleryComponent from "./gallery/GalleryComponent.svelte";
+    import AboutMe from "./about-me/AboutMe.svelte";
+    import SocialComponent from "./social/SocialComponent.svelte";
 
     let currentPage = $state(PageType.lobby)
 
@@ -11,10 +13,16 @@
 {#if currentPage === PageType.lobby}
     <button onclick={() => currentPage = PageType.computer}>computer</button>
     <button onclick={() => currentPage = PageType.gallery}>gallery</button>
+    <button onclick={() => currentPage = PageType.aboutMe}>about me</button>
+    <button onclick={() => currentPage = PageType.social}>social</button>
 {:else if currentPage === PageType.computer}
     <Computer />
 {:else if currentPage === PageType.gallery}
     <GalleryComponent />
+{:else if currentPage === PageType.aboutMe}
+    <AboutMe />
+{:else if currentPage === PageType.social}
+    <SocialComponent />
 {/if}
 
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {getPage} from "../../services/business/computer-data/gallery-loader-service.svelte";
+    import {getPage} from "../../services/business/gallery/gallery-loader-service.svelte.js";
     import type {PageDTO} from "../../types/dto/page-dto";
     import GalleryPageComponent from "./GalleryPage/GalleryPageComponent.svelte";
     import {tick} from "svelte";

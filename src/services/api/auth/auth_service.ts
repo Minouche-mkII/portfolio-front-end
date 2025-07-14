@@ -4,11 +4,14 @@ import {HttpError} from "../../utils/http_error";
 export async function tryAuth(password: string) {
     const response = await fetch('login/try', {
         method: 'POST',
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             "password": password
-        })
+        }),
+        credentials: "include"
     })
     if (!response.ok) {
+        console.log(response.status +" "+response.statusText);
         throw new HttpError(response.status, response.statusText);
     }
     let token = (await response.json()).token

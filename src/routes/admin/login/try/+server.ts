@@ -17,6 +17,13 @@ export async function POST({ request, cookies }) {
             token: token,
         }), {headers: new Headers({"Content-Type": "application/json"}) });
     } catch (e) {
-        return new Response("", { status : (e as HttpError).code })
+        const status = (e as HttpError).code || 500;
+        const message = (e as HttpError).message || "Internal Server Error";
+
+        console.log("erreur svelkit Server Side : "+e, )
+        return new Response(JSON.stringify({ error: message }), {
+            status,
+            headers: { "Content-Type": "application/json" }
+        });
     }
 }

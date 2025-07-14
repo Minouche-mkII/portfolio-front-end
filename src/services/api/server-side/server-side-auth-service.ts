@@ -22,11 +22,13 @@ export async function isAuthenticated(token: string | undefined): Promise<boolea
 export async function serverSideAuth(password: string): Promise<string> {
     const formData = new FormData();
     formData.append("password", password);
+    console.log(BACKEND_URL+'login');
     const response = await fetch(BACKEND_URL+'login', {
         method: 'POST',
         body: formData
     })
     if (!response.ok) {
+        console.log("not ok : "+response.status+ " "+ response.statusText);
         throw new HttpError(response.status, response.statusText);
     }
     return (await response.json()).token

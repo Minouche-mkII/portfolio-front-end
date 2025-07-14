@@ -10,9 +10,11 @@
     import {deleteComputerData} from "../../../services/api/computer-data/delete_computer_data_service";
     import type {ComputerData} from "../../../types/dto/computer_data";
     import {goto} from "$app/navigation";
+    import {editABoutMePage} from "../../../services/api/about-me/about-me-service";
 
     type Props = {
         edit: boolean,
+        aboutMe: boolean,
         computerData: ComputerData,
         details: Detail[]
     }
@@ -20,7 +22,7 @@
     //TODO Rendre tout cela un peu plus propre en rafermissant la frontiière entre UI et service
     // ça ne devrait pas être bien long : mettre dans des fonctions
 
-    let {edit, computerData = $bindable(), details = $bindable()}: Props = $props()
+    let {edit, aboutMe, computerData = $bindable(), details = $bindable()}: Props = $props()
     let editMode = $state(edit)
     let imageData = $derived(splitImageContent(computerData.illustration_src))
     let src = $derived(BACKEND_URL+imageData[0])
@@ -61,6 +63,15 @@
     function submitForm() {
         success = false
         error = false
+        if(aboutMe) {
+            editABoutMePage(details).then(() => {
+                success = true
+            }).catch((err) => {
+                error = true
+                console.log(err)
+            })
+            return
+        }
         if(editMode) {
             editComputerData(formatNewComputer(computerData, details)).then( () => {
                 success = true
@@ -97,20 +108,22 @@
 </script>
 
 <form>
-    <h2>Carte</h2>
-    <section id="cardSection">
-        <img class="imagePreview" {src} {alt}/>
-        <ImageForm onSelected={(newPath, newAlt) => {
-            computerData.illustration_src = `${newPath}<->${newAlt}`
-        }}/>
-        <label for="name">Nom : </label>
-        <input bind:value="{computerData.name}" id="name" name="name"/>
-        <label for="folder">Dossier : </label>
-        <input bind:value="{computerData.parent_folder}" id="folder" name="folder"/>
-        <label for="priority">Priorité : </label>
-        <input bind:value="{computerData.priority}" id="priority" name="priority" type="number"/>
-        <button onclick={deleteCard}>Supprimer cette carte</button>
-    </section>
+    {#if !aboutMe}
+        <h2>Carte</h2>
+        <section id="cardSection">
+            <img class="imagePreview" {src} {alt}/>
+            <ImageForm onSelected={(newPath, newAlt) => {
+                computerData.illustration_src = `${newPath}<->${newAlt}`
+            }}/>
+            <label for="name">Nom : </label>
+            <input bind:value="{computerData.name}" id="name" name="name"/>
+            <label for="folder">Dossier : </label>
+            <input bind:value="{computerData.parent_folder}" id="folder" name="folder"/>
+            <label for="priority">Priorité : </label>
+            <input bind:value="{computerData.priority}" id="priority" name="priority" type="number"/>
+            <button onclick={deleteCard}>Supprimer cette carte</button>
+        </section>
+    {/if}
 
     <h2>Détails</h2>
     <section>

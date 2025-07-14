@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import {getPage, getPageList} from "../../services/business/computer-data/gallery-loader-service.svelte";
+    import {getPage, getPageList} from "../../services/business/gallery/gallery-loader-service.svelte.js";
     import type {GalleryImageDTO, PageDTO} from "../../types/dto/page-dto";
     import {onMount, setContext} from "svelte";
     import GalleryPageComponent from "./GalleryPage/GalleryPageComponent.svelte";

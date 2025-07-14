@@ -11,6 +11,7 @@
             await tryAuth(password)
             await goto("/admin")
         } catch (e) {
+            console.log(e)
             if ((e as HttpError).code === 401) {
                 error = "Mot de passe invalide"
             } else {
