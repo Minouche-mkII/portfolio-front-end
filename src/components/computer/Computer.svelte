@@ -12,7 +12,7 @@
     let loading = $state(true)
     let lastId = 0
     let style = $state("")
-    let userSelect = "all"
+    let userSelect = $state("all")
     onMount(() => {
         getComputerContext().then((context) => {
             computerContext = context
@@ -32,8 +32,8 @@
     function openWindow(newWindow: InitWindow) {
         let width = 600, height = 300;
         if(newWindow.type === WindowType.Detail) {
-            width = 1100
-            height = 600
+            width = 850
+            height = 650
         }
         newWindowX += 21
         newWindowY += 21
