@@ -77,11 +77,11 @@
     }
 
     const coveredPageKeyFrame = {
-        transform : "scale(0.8)"
+        transform : "translate(8%) scale(0.9) "
     }
 
     const showedPageKeyFrame = {
-        transform : "scale(1)"
+        transform : "translate(0) scale(1) "
     }
 
     async function animatePreviousPage() {
@@ -213,7 +213,7 @@
     }
     #backgroundPage {
         position: absolute;
-        left: 1em;
+        left: 2%;
         z-index: -10;
     }
 </style>
