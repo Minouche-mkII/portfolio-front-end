@@ -76,9 +76,18 @@
         easing: "cubic-bezier(0.5, -0.3, 1, 1.3)"
     }
 
+    const coveredPageKeyFrame = {
+        transform : "scale(0.8)"
+    }
+
+    const showedPageKeyFrame = {
+        transform : "scale(1)"
+    }
+
     async function animatePreviousPage() {
         await tick()
         const elementPreviousPage = document.getElementById("previous-page") as HTMLElement
+        const elementCurrentPage = document.getElementById("current-page") as HTMLElement
         const animation = elementPreviousPage.animate(
             [
                 pageCurrentKeyFrame,
@@ -87,12 +96,23 @@
             ],
             animParameters
         )
+        elementCurrentPage.animate(
+            [
+                coveredPageKeyFrame,
+                showedPageKeyFrame
+            ],
+            {
+                duration: pageAnimDuration,
+                easing: "ease"
+            }
+        )
         animation.finished.then(() => previousPage = null)
     }
 
     async function animateNextPage() {
         await tick()
         const elementCurrentPage = document.getElementById("current-page") as HTMLElement
+        const elementNextPage = document.getElementById("next-page") as HTMLElement
         const animation = elementCurrentPage.animate(
             [
                 pageBehindKeyFrame,
@@ -101,10 +121,26 @@
             ],
             animParameters
         )
+        setTimeout(() => {
+            elementNextPage.animate(
+                [
+                    showedPageKeyFrame,
+                    coveredPageKeyFrame
+                ],
+                {
+                    duration: pageAnimDuration/2,
+                    easing: "ease"
+                }
+            )
+        }, pageAnimDuration/2)
+
         animation.finished.then(() => nextPage = null)
     }
 </script>
 
+<div id="backgroundPage" class="page">
+
+</div>
 {#if previousPage}
     {#if pageIndex === 0}
         <div class="page cover" id="previous-page">
@@ -174,5 +210,10 @@
     .page.cover {
         background-color: rgb(255, 89, 0);
         color: white;
+    }
+    #backgroundPage {
+        position: absolute;
+        left: 1em;
+        z-index: -10;
     }
 </style>
