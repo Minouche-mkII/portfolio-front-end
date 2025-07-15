@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {getContext, onMount, type Snippet} from "svelte";
+    import {getContext, onMount, type Snippet, tick} from "svelte";
     import type {ComputerWindow} from "../../../types/business/computer/WindowType";
     import type {WindowOperation} from "../../../types/business/computer/windows_operation";
 
@@ -11,10 +11,12 @@
     let {child, window: computerWindow = $bindable(), index}: Props = $props()
 
     const windowOperation = (getContext("window-context") as WindowOperation)
-    function close() {
-        windowOperation.closeWindow(index)
+    function close(event: MouseEvent) {
+        setTimeout(() => windowOperation.closeWindow(index), 200)
+        animationClass = "quitAnimation"
     }
 
+    let animationClass = $state("inAnimation")
     let style = $state("")
     let zIndex = $state(0)
     let cursorStyle = $state("auto")
@@ -135,7 +137,7 @@
 
 </script>
 
-<div role = "tabpanel" tabindex="{index}" class="computer-window"
+<div role = "tabpanel" tabindex="{index}" class="computer-window {animationClass}"
      {style} onmousedown={grabWindow} onmousemove={isResizable} onmouseup={setNotResizable}
 >
     <div role="toolbar" tabindex="0" class="page-header" onmousedown={startDragging}>
@@ -156,8 +158,24 @@
             transform: rotate(0deg) scale(1);
         }
     }
-    .computer-window {
+    @keyframes windowQuit {
+        from {
+            transform: scale(1);
+            opacity: 1;
+        }
+        to {
+            transform: scale(1.2);
+            opacity: 0.2;
+        }
+    }
+    .computer-window.quitAnimation {
+        pointer-events: none;
+        animation: windowQuit 0.2s cubic-bezier(.34,-0.75,.79,.48) both;
+    }
+    .computer-window.inAnimation {
         animation: windowArrive cubic-bezier(.12,.65,.74,1.53) 0.2s;
+    }
+    .computer-window {
         border: white solid 2px;
         border-radius: 4px;
         position: fixed;
