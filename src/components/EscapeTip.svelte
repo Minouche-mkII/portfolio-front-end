@@ -1,12 +1,5 @@
 <script lang="ts">
-    import {onMount} from "svelte";
-
-    let tip = $state(false)
-    onMount(() => {
-        setTimeout(() => {
-            tip = true
-        }, 5)
-    })
+    let tip = $state(true)
 </script>
 
 {#if tip}
@@ -18,27 +11,29 @@
 <style>
     @keyframes tipKeyFrames {
         0% {
-            top: -50px;
+            transform: translateY(-100px);
         }
         5% {
-            top: 50px;
+            transform: translateY(0);
         }
         95% {
-            top: 50px;
+            transform: translateY(0);
         }
         100% {
-            top: -50px;
+            transform: translateY(-100px);
         }
     }
     #escape-tip {
         animation: tipKeyFrames 2s ease-in;
         position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
+        top: 50px;
         z-index: 1000;
+        right: 5em;
         border: var(--font) 1px solid;
         border-radius: 30px;
         background-color: var(--background);
+        margin-left: auto;
+        margin-right: auto;
     }
     #escape-tip > p {
         margin: 20px 25px;
