@@ -87,13 +87,13 @@
     const spiralKeyFrames = [
 
         {
-            transform: "translate(-50%)"
-        },
-        {
             transform: "translate(-42%)"
         },
         {
-            transform: "translate(-50%)"
+            transform: "translate(-35%)"
+        },
+        {
+            transform: "translate(-42%)"
         }
     ]
 
@@ -262,11 +262,12 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        transform: translate(-50%);
+        transform: translate(-42%);
         height: 90vh;
         user-select: none;
     }
     #spirals img {
         z-index: 20;
+        width: 85%;
     }
 </style>
