@@ -34,7 +34,8 @@
     let offsetY = 0
 
     function startDragging(event: MouseEvent) {
-        if(event.clientY - computerWindow.y > 8) {
+        const windowLengthEnd = computerWindow.x + computerWindow.width
+        if(event.clientY - computerWindow.y > 8 && event.clientX < windowLengthEnd - 25) {
             windowOperation.setUserSelect(false)
             const target = event.target as HTMLElement
             offsetX = event.clientX - target.getBoundingClientRect().left;
