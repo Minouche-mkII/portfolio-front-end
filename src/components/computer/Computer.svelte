@@ -6,11 +6,11 @@
     import {getComputerContext} from "../../services/business/computer-data/persistant_computer_service.svelte";
     import type {ComputerContext} from "../../types/business/computer/computer_context";
     import {type InitWindow, WindowType} from "../../types/business/computer/WindowType";
+    import EscapeTip from "../EscapeTip.svelte";
 
-    let computerContext: ComputerContext = $state({openedWindows: [], computerData: new Map([])})
+    let computerContext: ComputerContext = $state({openedWindows: [], computerData: new Map([]), lastIndex: 0})
     let error = $state(false)
     let loading = $state(true)
-    let lastId = 0
     let style = $state("")
     let userSelect = $state("all")
     onMount(() => {
@@ -44,7 +44,7 @@
             newWindowX = 150
         }
         computerContext.openedWindows.push({
-            id: lastId,
+            id: computerContext.lastIndex,
             x: newWindowX,
             y: newWindowY,
             height: height,
@@ -54,7 +54,7 @@
             type: newWindow.type,
             data: newWindow.data,
         })
-        lastId += 1
+        computerContext.lastIndex += 1
     }
 
     function closeWindow(index: number) {
@@ -97,6 +97,8 @@
         {/each}
     {/if}
 </div>
+
+<EscapeTip />
 
 <style>
     #computer {

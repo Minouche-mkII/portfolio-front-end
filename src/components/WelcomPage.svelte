@@ -8,6 +8,12 @@
 
     let currentPage = $state(PageType.lobby)
 
+    function escape(ev: KeyboardEvent) {
+        if(ev.key === "Escape") {
+            currentPage = PageType.lobby
+        }
+    }
+
 </script>
 
 {#if currentPage === PageType.lobby}
@@ -24,5 +30,7 @@
 {:else if currentPage === PageType.social}
     <SocialComponent />
 {/if}
+
+<svelte:window onkeyup={escape} />
 
 

@@ -3,6 +3,7 @@
     import type {FormatedCardDetail} from "../../types/business/computer/formated_detail";
     import {onMount} from "svelte";
     import {getAboutMePage} from "../../services/business/about-me/about-me-loader-service";
+    import EscapeTip from "../EscapeTip.svelte";
 
     let aboutMePage : FormatedCardDetail[] | undefined = $state(undefined)
     let status : null | string = $state("loading ...")
@@ -23,6 +24,8 @@
         <DetailsPreview name={"About me"} details={aboutMePage}/>
    {/if}
 </div>
+
+<EscapeTip />
 
 <style>
     #aboutMePage {

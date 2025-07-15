@@ -7,6 +7,7 @@
     import type {ImageOrigin} from "../../types/business/gallery/image_origin_type";
     import ImageCardComponent from "./GalleryPage/ImageCardComponent.svelte";
     import GalleryBookComponent from "./GalleryBookComponent.svelte";
+    import EscapeTip from "../EscapeTip.svelte";
 
     let pageList: string[] | undefined = $state()
     let pageIndex = $state(-1)
@@ -86,6 +87,9 @@
         <p>loading</p>
     {/if}
 </div>
+
+
+<EscapeTip />
 
 {#snippet buttonDiv()}
     <div id="buttons-div">
