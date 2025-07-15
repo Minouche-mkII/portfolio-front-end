@@ -1,6 +1,12 @@
 <script lang="ts">
-    let tip = $state(true)
+    import {onMount} from "svelte";
 
+    let tip = $state(false)
+    onMount(() => {
+        setTimeout(() => {
+            tip = true
+        }, 5)
+    })
 </script>
 
 {#if tip}
