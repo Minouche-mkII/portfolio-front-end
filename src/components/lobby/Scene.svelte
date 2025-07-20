@@ -30,21 +30,21 @@
 <T.AmbientLight intensity={0.3} />
 
 <ButtonProps
-    position={[0, 0, -1]}
+    position={[0, 0, -2]}
     scale={9}
     modelPath="/models/desk.glb"
     onClick={() => changePage(PageType.computer)}
 />
 
 <ButtonProps
-    position={[-7, 0, -1]}
+    position={[-7, 0, -2]}
     scale={9}
     modelPath="/models/draw-table.glb"
     onClick={() => changePage(PageType.gallery)}
 />
 
 <ButtonProps
-    position={[5, 0, -1]}
+    position={[5, 0, -2]}
     scale={9}
     modelPath="/models/polaroid.glb"
     onClick={() => changePage(PageType.aboutMe)}

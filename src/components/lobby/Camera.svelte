@@ -4,11 +4,12 @@
 
     import { T } from "@threlte/core"
     import {tick} from "svelte";
+    import {getLastCameraPos, setLastCameraPos} from "../../services/business/lobby/camerapos";
 
-    const CAM_DISTANCE = 15
+    const CAM_DISTANCE = 13
 
-    let targetRotation = 1
-    let currentRotation = 1
+    let targetRotation = getLastCameraPos()
+    let currentRotation = getLastCameraPos()
     let cameraX = $state(Math.cos(currentRotation)*CAM_DISTANCE)
     let cameraY = $state(Math.sin(currentRotation)*CAM_DISTANCE)
 
@@ -41,6 +42,7 @@
             } else {
                 goLeft()
             }
+            setLastCameraPos(targetRotation)
             animate()
             dragging = false;
             window.removeEventListener('mousemove', onMouseMove);
@@ -83,7 +85,7 @@
 
 <T.PerspectiveCamera
         makeDefault
-        position={[cameraX, 12, cameraY]}
+        position={[cameraX, 16, cameraY]}
         oncreate={(ref) => {
         cameraRef = ref
         updateCamera()
