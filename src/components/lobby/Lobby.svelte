@@ -16,7 +16,7 @@
 <style>
     #lobby {
         display: block;
-        height: 95vh;
+        height: 98vh;
         overflow: hidden;
     }
 </style>

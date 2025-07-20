@@ -6,8 +6,9 @@
     import type {ChangePage} from "../../types/business/lobby/PageOperation";
     import {PageType} from "../../types/business/page_type";
     import {getContext} from "svelte";
+    import ElementProps from "./ElementProps.svelte";
 
-    let changePage = getContext("changePageContext")
+    let changePage = getContext("changePageContext") as ChangePage
 
     interactivity()
 </script>
@@ -27,13 +28,30 @@
     intensity={0.2}
 />
 <T.AmbientLight intensity={0.3} />
+
 <ButtonProps
-        position={[0, 0, 0]}
-         scale={9}
-         modelPath="/models/desk/desk.glb"
-         onClick={() => changePage(PageType.computer)}
+    position={[0, 0, -1]}
+    scale={9}
+    modelPath="/models/desk.glb"
+    onClick={() => changePage(PageType.computer)}
 />
 
+<ButtonProps
+    position={[-7, 0, -1]}
+    scale={9}
+    modelPath="/models/draw-table.glb"
+    onClick={() => changePage(PageType.gallery)}
+/>
 
+<ButtonProps
+    position={[5, 0, -1]}
+    scale={9}
+    modelPath="/models/polaroid.glb"
+    onClick={() => changePage(PageType.aboutMe)}
+/>
 
-
+<ElementProps
+    position={[-2, 0, 10]}
+    scale={4}
+    modelPath="/models/bed.glb"
+/>

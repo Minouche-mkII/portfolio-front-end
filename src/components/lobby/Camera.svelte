@@ -7,8 +7,8 @@
 
     const CAM_DISTANCE = 15
 
-    let targetRotation = 3
-    let currentRotation = 3
+    let targetRotation = 1
+    let currentRotation = 1
     let cameraX = $state(Math.cos(currentRotation)*CAM_DISTANCE)
     let cameraY = $state(Math.sin(currentRotation)*CAM_DISTANCE)
 

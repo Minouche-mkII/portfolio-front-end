@@ -1,7 +1,6 @@
 <script lang="ts">
+    import type {ThrelteGltf} from "@threlte/extras";
     import { T } from "@threlte/core"
-    import {Spring} from "svelte/motion";
-    import {type ThrelteGltf} from '@threlte/extras'
     import {onMount} from "svelte";
     import {loadAndConfigureModel} from "../../services/business/lobby/modelLoader";
 
@@ -9,15 +8,9 @@
         position: [x: number, y: number, z: number],
         scale: number,
         modelPath: string,
-        onClick: () => void
     }
 
-    let {position, scale, modelPath, onClick} : Props = $props()
-
-    const displayedScale = new Spring(scale, {
-        stiffness: 0.1,
-        damping: 0.28
-    })
+    let {position, scale, modelPath} : Props = $props()
 
     let model: ThrelteGltf<{
         nodes: Record<string, any>
@@ -34,16 +27,9 @@
 
 {#if model}
     <T.Mesh
-        onclick={onClick}
         is={model.scene}
-        scale={displayedScale.current}
+        {scale}
         {position}
-        onpointerenter={() => {
-            displayedScale.target = 1.1*scale
-        }}
-        onpointerleave={() => {
-            displayedScale.target = scale
-        }}
     >
     </T.Mesh>
 {/if}
