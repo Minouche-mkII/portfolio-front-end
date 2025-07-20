@@ -6,16 +6,17 @@
     import {
         Mesh,
         MeshStandardMaterial,
-        MeshToonMaterial, NearestFilter, TextureLoader,
+        MeshToonMaterial
     } from "three";
 
     type Props = {
         position: [x: number, y: number, z: number],
         scale: number,
-        modelPath: string
+        modelPath: string,
+        onClick: ()=> void
     }
 
-    let {position, scale, modelPath} : Props = $props()
+    let {position, scale, modelPath, onClick} : Props = $props()
 
     const displayedScale = new Spring(scale, {
         stiffness: 0.1,
@@ -48,6 +49,7 @@
 
 {#if model}
     <T.Mesh
+        onclick={onClick}
         is={model.scene}
         scale={displayedScale.current}
         {position}

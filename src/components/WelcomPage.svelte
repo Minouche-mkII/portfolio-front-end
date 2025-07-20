@@ -6,6 +6,7 @@
     import AboutMe from "./about-me/AboutMe.svelte";
     import SocialComponent from "./social/SocialComponent.svelte";
     import Lobby from "./lobby/Lobby.svelte";
+    import {setContext} from "svelte";
 
     let currentPage = $state(PageType.lobby)
 
@@ -14,6 +15,12 @@
             currentPage = PageType.lobby
         }
     }
+
+    function changePage(page: PageType) {
+        currentPage = page
+    }
+
+    setContext("changePageContext", changePage)
 
 </script>
 

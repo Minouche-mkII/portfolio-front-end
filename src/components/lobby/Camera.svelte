@@ -5,10 +5,12 @@
     import { T } from "@threlte/core"
     import {tick} from "svelte";
 
-    let targetRotation = 0
-    let currentRotation = 0
-    let cameraX = $state(Math.cos(currentRotation)*15)
-    let cameraY = $state(Math.sin(currentRotation)*15)
+    const CAM_DISTANCE = 15
+
+    let targetRotation = 3
+    let currentRotation = 3
+    let cameraX = $state(Math.cos(currentRotation)*CAM_DISTANCE)
+    let cameraY = $state(Math.sin(currentRotation)*CAM_DISTANCE)
 
     let cameraRef: PerspectiveCamera = new PerspectiveCamera()
 
@@ -47,7 +49,7 @@
     }
 
     function goRight() {
-        targetRotation+= 1
+        targetRotation += 1
     }
 
     function goLeft() {
@@ -55,8 +57,8 @@
     }
 
     async function updateCamera() {
-        cameraX = Math.cos(Math.PI/4*currentRotation)*15
-        cameraY = Math.sin(Math.PI/4*currentRotation)*15
+        cameraX = Math.cos(Math.PI/4*currentRotation)*CAM_DISTANCE
+        cameraY = Math.sin(Math.PI/4*currentRotation)*CAM_DISTANCE
         await tick()
         cameraRef.lookAt(0, 0, 0)
     }
@@ -72,7 +74,7 @@
         if(!(Math.abs(difference) < 0.2)) {
             setTimeout(() => {
                 animate()
-            }, 10)
+            }, 15)
         } else {
             currentRotation = targetRotation
         }
@@ -84,7 +86,7 @@
         position={[cameraX, 12, cameraY]}
         oncreate={(ref) => {
         cameraRef = ref
-        ref.lookAt(0,0,0)
+        updateCamera()
     }}
 />
 

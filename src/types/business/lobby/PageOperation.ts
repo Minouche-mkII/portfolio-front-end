@@ -1,0 +1,1 @@
+export type ChangePage = (page: PageType) => void

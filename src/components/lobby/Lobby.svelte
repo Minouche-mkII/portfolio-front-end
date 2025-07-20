@@ -1,11 +1,15 @@
 <script lang="ts">
     import { Canvas } from '@threlte/core'
     import Scene from "./Scene.svelte";
+    import {ACESFilmicToneMapping} from "three";
 </script>
 
 <div id="lobby">
-    <Canvas>
-        <Scene />
+    <Canvas
+        colorSpace="srgb"
+        toneMapping={ACESFilmicToneMapping}
+    >
+        <Scene/>
     </Canvas>
 </div>
 
