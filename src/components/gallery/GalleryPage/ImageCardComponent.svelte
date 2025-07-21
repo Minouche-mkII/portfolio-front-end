@@ -209,7 +209,7 @@
          onanimationend={animationEnd}
          id="current-card-modal"
     >
-        <div class="card" style="{cardStyle} {transitionStyle}" onclick={flip}>
+        <div class="card" style="{cardStyle} {transitionStyle}" onmousedown={flip}>
             <div class="inner-card {flipped ? 'flipped' : ''}">
                 <img src="{BACKEND_URL+image.src}" alt="{image.alt}">
                 <div class="card-back">

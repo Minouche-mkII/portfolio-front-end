@@ -6,9 +6,10 @@
     import AboutMe from "./about-me/AboutMe.svelte";
     import SocialComponent from "./social/SocialComponent.svelte";
     import Lobby from "./lobby/Lobby.svelte";
-    import {setContext} from "svelte";
+    import {onMount, setContext} from "svelte";
+    import SeizureWarning from "./SeizureWarning.svelte";
 
-    let currentPage = $state(PageType.lobby)
+    let currentPage = $state(PageType.seizureWarning)
 
     function escape(ev: KeyboardEvent) {
         if(ev.key === "Escape") {
@@ -22,11 +23,21 @@
 
     setContext("changePageContext", changePage)
 
-    let warning = $state(true)
-
-    function closeWarning() {
-        warning = false
+    function blockOneBack() {
+        history.pushState({ page: 1 }, '', window.location.href);
     }
+
+    onMount(() => {
+        window.addEventListener('popstate', function (event) {
+            currentPage = PageType.lobby
+        });
+    })
+
+    $effect(() => {
+        if(currentPage !== PageType.lobby && currentPage !== PageType.seizureWarning) {
+            blockOneBack()
+        }
+    })
 </script>
 
 {#if currentPage === PageType.lobby}
@@ -39,45 +50,8 @@
     <AboutMe />
 {:else if currentPage === PageType.social}
     <SocialComponent />
-{/if}
-
-{#if warning}
-    <div id="photosensible-warning">
-        <h1>⚠️ Warning : photosensitive epilepsy</h1>
-        <p> This portfolio contains bright visual effects, high contrast, and rapid animations that may trigger seizures in individuals with photosensitive epilepsy. Please proceed with caution.</p>
-        <button onclick={closeWarning}>Got it !</button>
-    </div>
+{:else if currentPage === PageType.seizureWarning}
+    <SeizureWarning />
 {/if}
 
 <svelte:window onkeyup={escape} />
-
-
-<style>
-    #photosensible-warning {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: black;
-        padding: 1em;
-        border-radius: 15px;
-    }
-    #photosensible-warning button:hover {
-        transform: scale(1.2);
-    }
-    #photosensible-warning button {
-        transition-duration: 0.2s;
-        font-size: 2em;
-        background-color: var(--secondary);
-        color: var(--font);
-        border: white solid 1px;
-        border-radius: 1em;
-        padding: 5px 9px 5px 9px;
-        margin: auto;
-        display: block;
-    }
-</style>
-
-
-
-

@@ -8,10 +8,9 @@
 
     const CAM_DISTANCE = 13
 
-    let targetRotation = getLastCameraPos()
-    let currentRotation = getLastCameraPos()
-    let cameraX = $state(Math.cos(currentRotation)*CAM_DISTANCE)
-    let cameraY = $state(Math.sin(currentRotation)*CAM_DISTANCE)
+    let targetRotation = new Spring(getLastCameraPos())
+    let cameraX = $state(Math.cos(targetRotation.current)*CAM_DISTANCE)
+    let cameraY = $state(Math.sin(targetRotation.current)*CAM_DISTANCE)
 
     let cameraRef: PerspectiveCamera = new PerspectiveCamera()
 
@@ -42,8 +41,6 @@
             } else {
                 goLeft()
             }
-            setLastCameraPos(targetRotation)
-            animate()
             dragging = false;
             window.removeEventListener('mousemove', onMouseMove);
             window.removeEventListener('mouseup', onMouseUp);
@@ -51,44 +48,34 @@
     }
 
     function goRight() {
-        targetRotation += 1
+        targetRotation.target += 1
+        setLastCameraPos(targetRotation.target)
     }
 
     function goLeft() {
-        targetRotation -= 1
+        targetRotation.target -= 1
+        setLastCameraPos(targetRotation.target)
     }
 
-    async function updateCamera() {
-        cameraX = Math.cos(Math.PI/4*currentRotation)*CAM_DISTANCE
-        cameraY = Math.sin(Math.PI/4*currentRotation)*CAM_DISTANCE
+    $effect(() => {
+        cameraX = Math.cos(Math.PI/4*targetRotation.current)*CAM_DISTANCE
+        cameraY = Math.sin(Math.PI/4*targetRotation.current)*CAM_DISTANCE
+        updateLook()
+    })
+
+    async function updateLook() {
         await tick()
         cameraRef.lookAt(0, 0, 0)
     }
 
-    function animate() {
-        const difference = currentRotation - targetRotation
-        if(difference < 0) {
-            currentRotation += 0.1
-        } else {
-            currentRotation -= 0.1
-        }
-        updateCamera()
-        if(!(Math.abs(difference) < 0.2)) {
-            setTimeout(() => {
-                animate()
-            }, 15)
-        } else {
-            currentRotation = targetRotation
-        }
-    }
 </script>
 
 <T.PerspectiveCamera
         makeDefault
-        position={[cameraX, 16, cameraY]}
+        position={[cameraX, 14, cameraY]}
         oncreate={(ref) => {
         cameraRef = ref
-        updateCamera()
+        updateLook()
     }}
 />
 

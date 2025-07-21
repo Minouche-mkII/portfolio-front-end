@@ -109,4 +109,7 @@
         }
         to { width: 100% }
     }
+    .image-div {
+        margin-bottom: 1em;
+    }
 </style>

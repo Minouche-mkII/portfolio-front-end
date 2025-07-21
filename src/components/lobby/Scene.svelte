@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { T } from "@threlte/core"
+    import {T, useThrelte} from "@threlte/core"
     import ButtonProps from "./ButtonProps.svelte";
     import { interactivity } from '@threlte/extras'
     import Camera from "./Camera.svelte";
@@ -7,25 +7,26 @@
     import {PageType} from "../../types/business/page_type";
     import {getContext} from "svelte";
     import ElementProps from "./ElementProps.svelte";
+    import {SphereGeometry} from "three";
 
     let changePage = getContext("changePageContext") as ChangePage
 
     interactivity()
 </script>
 
-
 <Camera />
 
 <T.DirectionalLight
-    color={0xffffff}
-    position={[5, 10, 7]}
-    intensity={2.3}
+    color={0xffe9ee}
+    position={[-10, 11, 15]}
+    intensity={3}
+    castShadow
 />
 
 <T.HemisphereLight
     skyColor={0xffffff}
     groundColor={0x202020}
-    intensity={0.2}
+    intensity={0.3}
 />
 <T.AmbientLight intensity={0.3} />
 
@@ -34,6 +35,7 @@
     scale={9}
     modelPath="/models/desk.glb"
     onClick={() => changePage(PageType.computer)}
+    toolTipPrompt="Dev logs"
 />
 
 <ButtonProps
@@ -41,6 +43,7 @@
     scale={9}
     modelPath="/models/draw-table.glb"
     onClick={() => changePage(PageType.gallery)}
+    toolTipPrompt="Gallery"
 />
 
 <ButtonProps
@@ -48,10 +51,11 @@
     scale={9}
     modelPath="/models/polaroid.glb"
     onClick={() => changePage(PageType.aboutMe)}
+    toolTipPrompt="About me"
 />
 
 <ElementProps
-    position={[-2, 0, 10]}
+    position={[0, 0, 10]}
     scale={4}
     modelPath="/models/bed.glb"
     rotation={0}

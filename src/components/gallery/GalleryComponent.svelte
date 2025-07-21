@@ -8,6 +8,7 @@
     import ImageCardComponent from "./GalleryPage/ImageCardComponent.svelte";
     import GalleryBookComponent from "./GalleryBookComponent.svelte";
     import EscapeTip from "../EscapeTip.svelte";
+    import TutorialTipsPopUp from "../TutorialTipsPopUp.svelte";
 
     let pageList: string[] | undefined = $state()
     let pageIndex = $state(-1)
@@ -90,6 +91,7 @@
 
 
 <EscapeTip />
+<TutorialTipsPopUp src="/tutorial-gallery.webp" prompt="&#x1F50D; Click on an image to take a closer look.<br>&#x1F4AC; Click it again to reveal its text.<br>&#x1F519; Click outside the image to return to the gallery." id="gallery-tip" />
 
 {#snippet buttonDiv()}
     <div id="buttons-div">

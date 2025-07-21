@@ -38,7 +38,7 @@
 
 </script>
 
-<div role="button" class="image-preview" {style} tabindex="0" onclick={openModal}>
+<div role="button" class="image-preview" {style} tabindex="0" onmousedown={openModal}>
     <img style="{imgRatio}" src="{BACKEND_URL+image.src}" alt="{image.alt}" class="{modal ? 'hide': ''}">
 </div>
 

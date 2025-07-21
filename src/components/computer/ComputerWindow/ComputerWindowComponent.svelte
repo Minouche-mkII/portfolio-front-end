@@ -182,7 +182,7 @@
         background-color: var(--background);
         display: flex;
         flex-direction: column;
-        box-shadow: 2px 2px 6px #818181;
+        box-shadow: 2px 2px 7px #818181;
     }
     .window-content {
         flex: 1;

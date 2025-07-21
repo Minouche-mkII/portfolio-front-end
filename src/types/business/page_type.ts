@@ -4,5 +4,6 @@ export enum PageType {
     gallery,
     aboutMe,
     music,
-    social
+    social,
+    seizureWarning
 }

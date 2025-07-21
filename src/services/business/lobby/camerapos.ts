@@ -1,5 +1,5 @@
 
-let cameraPos = 1;
+let cameraPos = 2;
 
 export function getLastCameraPos() {
     return cameraPos;
