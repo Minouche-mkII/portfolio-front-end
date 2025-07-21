@@ -23,7 +23,7 @@
 />
 
 <T.HemisphereLight
-    skyColor={0xffffe0}
+    skyColor={0xffffff}
     groundColor={0x202020}
     intensity={0.2}
 />
@@ -54,4 +54,12 @@
     position={[-2, 0, 10]}
     scale={4}
     modelPath="/models/bed.glb"
+    rotation={0}
+/>
+
+<ElementProps
+    position={[10, 0, 0.5]}
+    scale={3}
+    modelPath="/models/music.glb"
+    rotation={Math.PI/2}
 />

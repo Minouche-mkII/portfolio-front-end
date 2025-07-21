@@ -3,14 +3,16 @@
     import { T } from "@threlte/core"
     import {onMount} from "svelte";
     import {loadAndConfigureModel} from "../../services/business/lobby/modelLoader";
+    import {Euler} from "three";
 
     type Props = {
         position: [x: number, y: number, z: number],
         scale: number,
         modelPath: string,
+        rotation: number
     }
 
-    let {position, scale, modelPath} : Props = $props()
+    let {position, scale, modelPath, rotation} : Props = $props()
 
     let model: ThrelteGltf<{
         nodes: Record<string, any>
@@ -30,6 +32,7 @@
         is={model.scene}
         {scale}
         {position}
+        rotation.y={rotation}
     >
     </T.Mesh>
 {/if}
