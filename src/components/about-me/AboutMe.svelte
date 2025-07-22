@@ -49,6 +49,7 @@
         }
     }
     #flashEffect {
+        pointer-events: none;
         animation: flash 2s ease-in;
         opacity: 0;
         position: fixed;
