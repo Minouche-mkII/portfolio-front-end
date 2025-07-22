@@ -128,7 +128,7 @@
     const maxHeight = window.innerHeight * 0.8
     const screenRatio = maxWidth / maxHeight
 
-    if(finalWidth * screenRatio < finalHeight) {
+    if(finalHeight * screenRatio < finalWidth) {
         if(finalWidth > maxWidth) {
             finalWidth = maxWidth
             finalHeight = finalWidth / ratio
