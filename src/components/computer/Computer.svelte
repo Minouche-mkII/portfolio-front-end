@@ -30,7 +30,7 @@
     let newWindowX = 150
     let newWindowY = 150
     function openWindow(newWindow: InitWindow) {
-        let width = 600, height = 300;
+        let width = 585, height = 470;
         if(newWindow.type === WindowType.Detail) {
             width = 850
             height = 650
