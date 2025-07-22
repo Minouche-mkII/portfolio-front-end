@@ -27,10 +27,14 @@
             <img {src} {alt}>
         </div>
     {:else if part.type === "intern-link"}
-        <InternLinkComponent props={normalizeArrayString(part.content)}/>
+        <div>
+            <InternLinkComponent props={normalizeArrayString(part.content)}/>
+        </div>
     {:else if part.type === "extern-link"}
-        <div class="cool-link">
-            <a target="_blank" rel="noopener noreferrer" href="{normalizeString(part.content[0])}">{normalizeString(part.content[1])}</a>
+        <div>
+            <div class="cool-link">
+                <a target="_blank" rel="noopener noreferrer" href="{normalizeString(part.content[0])}">{normalizeString(part.content[1])}</a>
+            </div>
         </div>
     {:else if part.type === "column"}
         <div>
