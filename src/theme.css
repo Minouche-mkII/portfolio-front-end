@@ -43,6 +43,7 @@ h2 {
 }
 
 .cool-link {
+    margin-bottom: 1em;
     display: inline-block;
     font-size: 20px;
     border-radius: 20px;
