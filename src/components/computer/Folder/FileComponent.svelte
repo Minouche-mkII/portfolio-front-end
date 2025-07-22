@@ -20,6 +20,10 @@
         color: var(--font);
         border: none;
         border-radius: 5%;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        align-items: center;
     }
     button img {
         height: 80%;
