@@ -27,14 +27,10 @@
             <img {src} {alt}>
         </div>
     {:else if part.type === "intern-link"}
-        <div>
-            <InternLinkComponent props={normalizeArrayString(part.content)}/>
-        </div>
+        <InternLinkComponent props={normalizeArrayString(part.content)}/>
     {:else if part.type === "extern-link"}
-        <div>
-            <div class="cool-link">
-                <a target="_blank" rel="noopener noreferrer" href="{normalizeString(part.content[0])}">{normalizeString(part.content[1])}</a>
-            </div>
+        <div class="cool-link">
+            <a target="_blank" rel="noopener noreferrer" href="{normalizeString(part.content[0])}">{normalizeString(part.content[1])}</a>
         </div>
     {:else if part.type === "column"}
         <div>
@@ -77,6 +73,11 @@
         min-width: 19em;
         max-width: 100%;
     }
+    .grid > .cool-link {
+        flex: 0 1 auto;
+        min-width: unset;
+        max-width: unset;
+    }
     img {
         display: block;
         width: 100%;
@@ -99,6 +100,7 @@
         display: inline-block;
     }
     a {
+        display: inline-block;
         text-decoration: none;
         color: var(--font);
     }

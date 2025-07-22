@@ -41,10 +41,9 @@ h2 {
     margin-left: auto;
     margin-right: auto;
 }
-
 .cool-link {
-    margin-bottom: 1em;
-    display: inline-block;
+    display: inline-flex;    /* Important : pour que le div se rétracte au contenu */
+    width: fit-content;
     font-size: 20px;
     border-radius: 20px;
     padding: 5px 12px 5px 12px;
@@ -54,7 +53,16 @@ h2 {
     transition:
             box-shadow ease 0.2s,
             transform cubic-bezier(.38,-0.71,.76,1.67) 0.2s;
+    flex: 0 1 auto;
 }
+
+.cool-link > * {
+    width: fit-content;
+    text-decoration: none;
+    color: inherit;
+    font: inherit;
+}
+
 
 .cool-link:hover {
     box-shadow: 0 0 1em var(--secondary);
