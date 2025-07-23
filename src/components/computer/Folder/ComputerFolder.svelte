@@ -23,5 +23,6 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(9em, auto));
         justify-content: start;
+        user-select: none;
     }
 </style>

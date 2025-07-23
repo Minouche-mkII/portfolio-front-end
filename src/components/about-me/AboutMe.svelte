@@ -38,10 +38,10 @@
         0% {
             opacity: 0;
         }
-        3% {
+        6% {
             opacity: 1;
         }
-        20% {
+        25% {
             opacity: 1;
         }
         100% {
@@ -50,7 +50,7 @@
     }
     #flashEffect {
         pointer-events: none;
-        animation: flash 2s ease-in;
+        animation: flash 1.6s ease;
         opacity: 0;
         position: fixed;
         background: radial-gradient(circle, rgba(215, 200, 180, 1) 0%, rgba(220, 200, 180, 0.7) 80%, rgba(220, 200, 180, 0) 100%);

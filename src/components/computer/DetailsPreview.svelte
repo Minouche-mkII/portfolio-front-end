@@ -73,6 +73,9 @@
         min-width: 19em;
         max-width: 100%;
     }
+    div {
+        user-select: text;
+    }
     .grid > .cool-link {
         flex: 0 1 auto;
         min-width: unset;

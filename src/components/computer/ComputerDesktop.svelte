@@ -25,3 +25,9 @@
 <div>
     <ComputerFolder {files}/>
 </div>
+
+<style>
+    div {
+        user-select: none;
+    }
+</style>

@@ -56,14 +56,6 @@ h2 {
     flex: 0 1 auto;
 }
 
-.cool-link > * {
-    width: fit-content;
-    text-decoration: none;
-    color: inherit;
-    font: inherit;
-}
-
-
 .cool-link:hover {
     box-shadow: 0 0 1em var(--secondary);
     background: linear-gradient(45deg, var(--primary), var(--secondary));

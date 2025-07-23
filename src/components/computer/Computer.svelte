@@ -30,7 +30,7 @@
     let newWindowX = 150
     let newWindowY = 150
     function openWindow(newWindow: InitWindow) {
-        let width = 585, height = 470;
+        let width = 721, height = 475;
         if(newWindow.type === WindowType.Detail) {
             width = 850
             height = 650
@@ -108,6 +108,9 @@
         left: 0;
         right: 0;
         bottom: 0;
+    }
+    #computer div {
+        user-select: none;
     }
 </style>
 

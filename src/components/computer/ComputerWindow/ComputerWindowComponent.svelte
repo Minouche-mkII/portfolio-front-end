@@ -209,4 +209,7 @@
     button:hover {
         background-color: var(--secondary);
     }
+    div {
+        user-select: none;
+    }
 </style>
