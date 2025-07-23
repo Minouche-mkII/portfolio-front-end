@@ -8,6 +8,7 @@
     import Lobby from "./lobby/Lobby.svelte";
     import {onMount, setContext} from "svelte";
     import SeizureWarning from "./SeizureWarning.svelte";
+    import BackButton from "../BackButton.svelte";
 
     let currentPage = $state(PageType.seizureWarning)
 
@@ -38,6 +39,7 @@
             blockOneBack()
         }
     })
+
 </script>
 
 {#if currentPage === PageType.lobby}
@@ -52,6 +54,10 @@
     <SocialComponent />
 {:else if currentPage === PageType.seizureWarning}
     <SeizureWarning />
+{/if}
+
+{#if currentPage !== PageType.lobby && currentPage !== PageType.seizureWarning}
+    <BackButton top={currentPage !== PageType.computer} onclick={() => currentPage = PageType.lobby} />
 {/if}
 
 <svelte:window onkeyup={escape} />
